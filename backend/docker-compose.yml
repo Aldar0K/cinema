@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  # setup core service
+  core:
+    build: ./core-service
+    networks:
+      - event-booking-api
+    ports:
+      - "5000:5000"
+    # setup notification service
+    notification:
+      depends_on:
+        - core
+      build: ./notification-service
+      networks:
+        - event-booking-api
+      ports:
+        - "5001:5001"
+
+networks:
+  event-booking-api:
+    driver: bridge
