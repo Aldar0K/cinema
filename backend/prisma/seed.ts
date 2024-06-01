@@ -32,6 +32,8 @@ async function main() {
   });
 
   console.log({ post1, post2 });
+
+  // TODO create movie and seats
 }
 
 // execute the main function
