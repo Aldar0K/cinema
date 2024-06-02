@@ -33,13 +33,15 @@ model Article {
 }
 
 model Movie {
-  id      Int     @id     @default(autoincrement())
+  id      Int     @id @default(autoincrement())
   name    String  @unique
   seats   Seat[]
 }
 
 model Seat {
   id          Int     @id @default(autoincrement())
+  row         Int     @default(autoincrement())
+  place       Int     @default(autoincrement())
   userId      Int?
   claimedBy   User?   @relation(fields: [userId], references: [id])
   movieId     Int

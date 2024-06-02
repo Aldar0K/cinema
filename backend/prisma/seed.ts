@@ -31,9 +31,49 @@ async function main() {
     },
   });
 
-  console.log({ post1, post2 });
+  // TODO create admin user
+  const admin = await prisma.user.upsert({
+    where: { email: 'admin@example.com' },
+    update: {},
+    create: {
+      email: 'admin@example.com',
+    },
+  });
 
   // TODO create movie and seats
+  const movie1 = await prisma.movie.upsert({
+    where: { name: 'Furiosa' },
+    update: {},
+    create: {
+      name: 'Furiosa',
+    },
+  });
+
+  const seat1 = await prisma.seat.upsert({
+    where: {
+      id: 1,
+    },
+    update: {},
+    create: {
+      row: 1,
+      place: 1,
+      movieId: movie1.id,
+    },
+  });
+
+  const seat2 = await prisma.seat.upsert({
+    where: {
+      id: 2,
+    },
+    update: {},
+    create: {
+      row: 1,
+      place: 2,
+      movieId: movie1.id,
+    },
+  });
+
+  console.log({ post1, post2, admin, movie1, seat1, seat2 });
 }
 
 // execute the main function

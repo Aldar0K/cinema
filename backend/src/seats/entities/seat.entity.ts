@@ -1,32 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Article } from '@prisma/client';
+import { Seat } from '@prisma/client';
+import { MovieEntity } from 'src/movies/entities/movie.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 
-export class ArticleEntity implements Article {
+export class SeatEntity implements Seat {
   @ApiProperty()
   id: number;
 
   @ApiProperty()
-  title: string;
-
-  @ApiProperty({ required: false, nullable: true })
-  description: string | null;
+  row: number;
 
   @ApiProperty()
-  body: string;
+  place: number;
 
   @ApiProperty({ required: false, nullable: true })
   userId: number | null;
 
   @ApiProperty({ required: false, nullable: true })
-  user: UserEntity | null;
+  claimedBy: UserEntity | null;
 
   @ApiProperty()
-  published: boolean;
+  movieId: number;
 
   @ApiProperty()
-  createdAt: Date;
-
-  @ApiProperty()
-  updatedAt: Date;
+  movie: MovieEntity;
 }

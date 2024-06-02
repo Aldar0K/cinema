@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Seat" ADD COLUMN     "place" SERIAL NOT NULL,
+ADD COLUMN     "row" SERIAL NOT NULL;
