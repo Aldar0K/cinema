@@ -46,4 +46,5 @@ model Seat {
   claimedBy   User?   @relation(fields: [userId], references: [id])
   movieId     Int
   movie       Movie   @relation(fields: [movieId], references: [id])
+  version     Int     @default(0)
 }

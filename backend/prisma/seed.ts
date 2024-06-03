@@ -31,7 +31,6 @@ async function main() {
     },
   });
 
-  // TODO create admin user
   const admin = await prisma.user.upsert({
     where: { email: 'admin@example.com' },
     update: {},
@@ -40,7 +39,6 @@ async function main() {
     },
   });
 
-  // TODO create movie and seats
   const movie1 = await prisma.movie.upsert({
     where: { name: 'Furiosa' },
     update: {},

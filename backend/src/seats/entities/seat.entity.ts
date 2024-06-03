@@ -24,4 +24,7 @@ export class SeatEntity implements Seat {
 
   @ApiProperty()
   movie: MovieEntity;
+
+  @ApiProperty()
+  version: number;
 }

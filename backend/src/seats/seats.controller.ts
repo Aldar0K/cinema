@@ -1,9 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { SeatsService } from './seats.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateSeatDto } from './dto/create-seat.dto';
 import { UpdateSeatDto } from './dto/update-seat.dto';
+import { SeatsService } from './seats.service';
 
 @Controller('seats')
+@ApiTags('seats')
 export class SeatsController {
   constructor(private readonly seatsService: SeatsService) {}
 
