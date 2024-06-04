@@ -40,9 +40,9 @@ model Movie {
 
 model Seat {
   id          Int     @id @default(autoincrement())
-  row         Int     @default(autoincrement())
-  place       Int     @default(autoincrement())
-  userId      Int?
+  row         Int     
+  place       Int     
+  userId      Int?    
   claimedBy   User?   @relation(fields: [userId], references: [id])
   movieId     Int
   movie       Movie   @relation(fields: [movieId], references: [id])

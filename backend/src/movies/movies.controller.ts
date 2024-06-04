@@ -37,11 +37,13 @@ export class MoviesController {
   }
 
   @Patch(':id')
+  @ApiOkResponse({ type: MovieEntity })
   update(@Param('id') id: string, @Body() updateMovieDto: UpdateMovieDto) {
     return this.moviesService.update(+id, updateMovieDto);
   }
 
   @Delete(':id')
+  @ApiOkResponse({ type: MovieEntity })
   remove(@Param('id') id: string) {
     return this.moviesService.remove(+id);
   }

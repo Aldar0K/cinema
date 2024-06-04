@@ -50,6 +50,7 @@ async function main() {
   const seat1 = await prisma.seat.upsert({
     where: {
       id: 1,
+      movieId: movie1.id,
     },
     update: {},
     create: {
@@ -62,6 +63,7 @@ async function main() {
   const seat2 = await prisma.seat.upsert({
     where: {
       id: 2,
+      movieId: movie1.id,
     },
     update: {},
     create: {

@@ -23,10 +23,13 @@ export class MoviesService {
   }
 
   update(id: number, updateMovieDto: UpdateMovieDto) {
-    return `This action updates a #${id} movie`;
+    return this.prisma.movie.update({
+      where: { id },
+      data: updateMovieDto,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} movie`;
+    return this.prisma.movie.delete({ where: { id } });
   }
 }

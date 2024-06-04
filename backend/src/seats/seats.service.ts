@@ -16,14 +16,20 @@ export class SeatsService {
   }
 
   findOne(id: number) {
-    return this.prisma.seat.findUnique({ where: { id } });
+    return this.prisma.seat.findUnique({
+      where: { id },
+      include: { movie: true },
+    });
   }
 
   update(id: number, updateSeatDto: UpdateSeatDto) {
-    return `This action updates a #${id} seat`;
+    return this.prisma.seat.update({
+      where: { id },
+      data: updateSeatDto,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} seat`;
+    return this.prisma.seat.delete({ where: { id } });
   }
 }
