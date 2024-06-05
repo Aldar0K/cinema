@@ -8,6 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { BookSeatDto } from './dto/book-seat.dto';
 import { CreateSeatDto } from './dto/create-seat.dto';
 import { UpdateSeatDto } from './dto/update-seat.dto';
 import { SeatsService } from './seats.service';
@@ -40,5 +41,10 @@ export class SeatsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.seatsService.remove(+id);
+  }
+
+  @Post(':id/book')
+  book(@Param('id') id: string, @Body() bookSeatDto: BookSeatDto) {
+    return this.seatsService.book(+id, bookSeatDto);
   }
 }
