@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { BookSeatDto } from './dto/book-seat.dto';
 import { CreateSeatDto } from './dto/create-seat.dto';
@@ -22,7 +22,7 @@ export class SeatsService {
       include: { movie: true, claimedBy: true },
     });
     if (!seat) {
-      throw new Error('Seat not found');
+      throw new HttpException('Seat not found', HttpStatus.NOT_FOUND);
     }
 
     return seat;
@@ -45,22 +45,43 @@ export class SeatsService {
       select: { userId: true, version: true, id: true },
     });
     if (!seat) {
-      throw new Error('Seat not found');
+      throw new HttpException('Seat not found', HttpStatus.NOT_FOUND);
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
     const isSeatAvailable = seat.userId === null;
     if (!isSeatAvailable) {
-      throw new Error('Seat already booked');
+      throw new HttpException('Seat already booked', HttpStatus.CONFLICT);
     }
 
-    return this.prisma.seat.updateMany({
+    return this.prisma.seat.update({
       where: {
         id: seat.id,
         version: seat.version,
       },
       data: {
-        userId,
-        version: { increment: 1 },
+        userId: user.id,
+        version: {
+          increment: 1,
+        },
+      },
+    });
+  }
+
+  async unbook(id: number) {
+    return this.prisma.seat.update({
+      where: { id },
+      data: {
+        userId: null,
+        version: {
+          decrement: 1,
+        },
       },
     });
   }

@@ -47,4 +47,9 @@ export class SeatsController {
   book(@Param('id') id: string, @Body() bookSeatDto: BookSeatDto) {
     return this.seatsService.book(+id, bookSeatDto);
   }
+
+  @Post(':id/unbook')
+  unbook(@Param('id') id: string) {
+    return this.seatsService.unbook(+id);
+  }
 }
