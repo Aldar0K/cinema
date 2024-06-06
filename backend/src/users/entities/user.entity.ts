@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 import { ArticleEntity } from 'src/articles/entities/article.entity';
+import { SeatEntity } from 'src/seats/entities/seat.entity';
 
 export class UserEntity implements User {
   @ApiProperty()
@@ -13,6 +14,5 @@ export class UserEntity implements User {
   articles: ArticleEntity[];
 
   @ApiProperty({ required: false, nullable: true })
-  // TODO add SeatEntity when it's created
-  seats: any[];
+  seats: SeatEntity[];
 }

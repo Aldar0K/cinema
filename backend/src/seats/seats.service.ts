@@ -39,6 +39,17 @@ export class SeatsService {
     return this.prisma.seat.delete({ where: { id } });
   }
 
+  async reserve(id: number) {
+    return this.prisma.seat.update({
+      where: { id },
+      data: {
+        version: {
+          increment: 1,
+        },
+      },
+    });
+  }
+
   async book(id: number, { userId }: BookSeatDto) {
     const seat = await this.prisma.seat.findUnique({
       where: { id },
