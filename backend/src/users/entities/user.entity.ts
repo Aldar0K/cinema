@@ -10,6 +10,9 @@ export class UserEntity implements User {
   @ApiProperty()
   email: string;
 
+  @ApiProperty()
+  password: string;
+
   @ApiProperty({ required: false, nullable: true })
   articles: ArticleEntity[];
 

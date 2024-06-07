@@ -15,7 +15,7 @@ export class UsersService {
     return `This action returns all users`;
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     return this.prisma.user.findFirst({
       where: { id },
     });
@@ -24,6 +24,7 @@ export class UsersService {
   async findByEmail(email: string) {
     return this.prisma.user.findFirst({
       where: { email },
+      select: { id: true, email: true, password: true },
     });
   }
 
