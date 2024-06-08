@@ -7,7 +7,12 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update-movie.dto';
 import { MovieEntity } from './entities/movie.entity';
@@ -15,6 +20,7 @@ import { MoviesService } from './movies.service';
 
 @Controller('movies')
 @ApiTags('movies')
+@ApiBearerAuth('access_token')
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
 

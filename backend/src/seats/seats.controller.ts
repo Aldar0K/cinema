@@ -7,7 +7,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { BookSeatDto } from './dto/book-seat.dto';
 import { CreateSeatDto } from './dto/create-seat.dto';
 import { UpdateSeatDto } from './dto/update-seat.dto';
@@ -15,6 +15,7 @@ import { SeatsService } from './seats.service';
 
 @Controller('seats')
 @ApiTags('seats')
+@ApiBearerAuth('access_token')
 export class SeatsController {
   constructor(private readonly seatsService: SeatsService) {}
 

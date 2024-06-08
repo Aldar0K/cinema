@@ -11,7 +11,7 @@ async function bootstrap() {
     .setDescription('The Median API description')
     .setVersion('0.1')
     .addBearerAuth(
-      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      { type: 'http', scheme: 'bearer', in: 'header', bearerFormat: 'JWT' },
       'access_token',
     )
     .build();

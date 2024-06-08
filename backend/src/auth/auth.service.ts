@@ -27,4 +27,8 @@ export class AuthService {
       access_token: token,
     };
   }
+
+  async getProfile(userId: number) {
+    return userId;
+  }
 }
