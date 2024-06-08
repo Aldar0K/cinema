@@ -1,5 +1,13 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/sign-in.dto';
 
@@ -12,5 +20,12 @@ export class AuthController {
   @ApiCreatedResponse({})
   signIn(@Body() { email, password }: SignInDto) {
     return this.authService.signIn(email, password);
+  }
+
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth('access_token')
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }

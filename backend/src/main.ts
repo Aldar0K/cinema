@@ -10,6 +10,10 @@ async function bootstrap() {
     .setTitle('Median')
     .setDescription('The Median API description')
     .setVersion('0.1')
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      'access_token',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
