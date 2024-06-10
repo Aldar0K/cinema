@@ -44,6 +44,13 @@ export class SeatsController {
     return this.seatsService.remove(+id);
   }
 
+  // admin only
+  @Post(':id/reserve')
+  reserve(@Param('id') id: string) {
+    return this.seatsService.reserve(+id);
+  }
+
+  // client only
   @Post(':id/book')
   book(@Param('id') id: string, @Body() bookSeatDto: BookSeatDto) {
     return this.seatsService.book(+id, bookSeatDto);
@@ -51,6 +58,6 @@ export class SeatsController {
 
   @Post(':id/unbook')
   unbook(@Param('id') id: string) {
-    return this.seatsService.unbook(+id);
+    return this.seatsService.unreserve(+id);
   }
 }

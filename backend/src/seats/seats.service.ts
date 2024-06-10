@@ -85,7 +85,7 @@ export class SeatsService {
     });
   }
 
-  async unbook(id: number) {
+  async unreserve(id: number) {
     return this.prisma.seat.update({
       where: { id },
       data: {
