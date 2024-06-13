@@ -1,6 +1,8 @@
 // prisma/seed.ts
 
 import { PrismaClient } from '@prisma/client';
+import { hash } from 'bcrypt';
+import { roundsOfHashing } from '../src/auth/constants';
 
 // initialize Prisma Client
 const prisma = new PrismaClient();
@@ -31,11 +33,16 @@ async function main() {
     },
   });
 
+  await prisma.user.deleteMany();
+
+  const password = await hash('1234', roundsOfHashing);
+
   const admin = await prisma.user.upsert({
     where: { email: 'admin@example.com' },
     update: {},
     create: {
       email: 'admin@example.com',
+      password,
     },
   });
 

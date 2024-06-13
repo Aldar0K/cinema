@@ -50,6 +50,18 @@ export class SeatsService {
     });
   }
 
+  async unreserve(id: number) {
+    return this.prisma.seat.update({
+      where: { id },
+      data: {
+        userId: null,
+        version: {
+          decrement: 1,
+        },
+      },
+    });
+  }
+
   async book(id: number, { userId }: BookSeatDto) {
     const seat = await this.prisma.seat.findUnique({
       where: { id },
@@ -80,18 +92,6 @@ export class SeatsService {
         userId: user.id,
         version: {
           increment: 1,
-        },
-      },
-    });
-  }
-
-  async unreserve(id: number) {
-    return this.prisma.seat.update({
-      where: { id },
-      data: {
-        userId: null,
-        version: {
-          decrement: 1,
         },
       },
     });
