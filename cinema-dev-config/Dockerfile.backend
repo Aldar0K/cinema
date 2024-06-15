@@ -8,4 +8,4 @@ RUN npm i --save
 
 COPY . .
 
-CMD ["npm", "run", "develop"]
+CMD ["npm", "run", "start:dev"]
