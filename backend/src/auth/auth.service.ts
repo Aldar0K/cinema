@@ -13,7 +13,10 @@ export class AuthService {
     private readonly prisma: PrismaService,
   ) {}
 
-  async signUp({ email, password }: SignUpDto) {
+  async signUp({
+    email,
+    password,
+  }: SignUpDto): Promise<{ access_token: string }> {
     const user = await this.prisma.user.findFirst({
       where: {
         email,
@@ -75,7 +78,10 @@ export class AuthService {
     };
   }
 
-  async getProfile(userId: number) {
-    return userId;
+  async getProfile(userId: number): Promise<{ id: number; email: string }> {
+    return this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, email: true },
+    });
   }
 }

@@ -12,35 +12,39 @@ export class UsersService {
   async create({ email, password }: CreateUserDto) {
     const hashedPassword = await hash(password, roundsOfHashing);
 
-    await this.prisma.user.create({
+    return await this.prisma.user.create({
       data: {
         email,
         password: hashedPassword,
       },
+      select: { id: true, email: true },
     });
   }
 
   async findAll() {
-    return this.prisma.user.findMany();
+    return await this.prisma.user.findMany({
+      select: { id: true, email: true },
+    });
   }
 
-  async findOne(id: number) {
-    return this.prisma.user.findFirst({
+  async findById(id: number) {
+    return await this.prisma.user.findFirst({
       where: { id },
+      select: { id: true, email: true },
     });
   }
 
   async findByEmail(email: string) {
-    return this.prisma.user.findFirst({
+    return await this.prisma.user.findFirst({
       where: { email },
-      select: { id: true, email: true, password: true },
+      select: { id: true, email: true },
     });
   }
 
   async update(id: number, { email, password }: UpdateUserDto) {
     const hashedPassword = await hash(password, roundsOfHashing);
 
-    return this.prisma.user.update({
+    return await this.prisma.user.update({
       where: { id },
       data: {
         email,
@@ -58,6 +62,6 @@ export class UsersService {
       throw new HttpException('Seat not found', HttpStatus.NOT_FOUND);
     }
 
-    return this.prisma.user.delete({ where: { id } });
+    return await this.prisma.user.delete({ where: { id } });
   }
 }

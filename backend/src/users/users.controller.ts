@@ -18,26 +18,37 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  // admin only
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
+  // admin only
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
+  // admin only
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  findById(@Param('id') id: string) {
+    return this.usersService.findById(+id);
   }
 
+  // admin only
+  @Get(':email')
+  findByEmail(@Param('email') email: string) {
+    return this.usersService.findByEmail(email);
+  }
+
+  // admin only
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
   }
 
+  // admin only
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);

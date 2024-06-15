@@ -28,7 +28,6 @@ export class AuthController {
   @Get('profile')
   getProfile(@Request() req) {
     const userId = req.user.sub;
-
     return this.authService.getProfile(userId);
   }
 }
