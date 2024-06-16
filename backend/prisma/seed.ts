@@ -54,33 +54,36 @@ async function main() {
     },
   });
 
-  const seat1 = await prisma.seat.upsert({
-    where: {
-      id: 1,
+  const seance1 = await prisma.seance.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      time: new Date(),
       movieId: movie1.id,
     },
+  });
+
+  const seat1 = await prisma.seat.upsert({
+    where: { id: 1 },
     update: {},
     create: {
       row: 1,
       place: 1,
-      movieId: movie1.id,
+      seanceId: seance1.id,
     },
   });
 
   const seat2 = await prisma.seat.upsert({
-    where: {
-      id: 2,
-      movieId: movie1.id,
-    },
+    where: { id: 2 },
     update: {},
     create: {
       row: 1,
       place: 2,
-      movieId: movie1.id,
+      seanceId: seance1.id,
     },
   });
 
-  console.log({ post1, post2, admin, movie1, seat1, seat2 });
+  console.log({ post1, post2, admin, movie1, seance1, seat1, seat2 });
 }
 
 // execute the main function

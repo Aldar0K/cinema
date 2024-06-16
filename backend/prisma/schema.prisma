@@ -14,11 +14,11 @@ datasource db {
 }
 
 model User {
-  id          Int             @id @default(autoincrement())
-  email       String          @unique
-  password    String          
-  articles    Article[]  
-  seats       Seat[]
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  password String
+  articles Article[]
+  seats    Seat[]
 }
 
 model Article {
@@ -34,18 +34,26 @@ model Article {
 }
 
 model Movie {
-  id      Int     @id @default(autoincrement())
-  name    String  @unique
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  seances Seance[]
+}
+
+model Seance {
+  id      Int      @id @default(autoincrement())
+  time    DateTime @unique
+  movie   Movie    @relation(fields: [movieId], references: [id])
+  movieId Int
   seats   Seat[]
 }
 
 model Seat {
-  id          Int     @id @default(autoincrement())
-  row         Int     
-  place       Int     
-  userId      Int?    
-  claimedBy   User?   @relation(fields: [userId], references: [id])
-  movieId     Int
-  movie       Movie   @relation(fields: [movieId], references: [id])
-  version     Int     @default(0)
+  id        Int       @id @default(autoincrement())
+  row       Int
+  place     Int
+  seance    Seance?   @relation(fields: [seanceId], references: [id])
+  seanceId  Int?
+  userId    Int?
+  claimedBy User?     @relation(fields: [userId], references: [id])
+  version   Int       @default(0)
 }
