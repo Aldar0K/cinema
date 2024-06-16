@@ -7,9 +7,10 @@ import { UsersModule } from './users/users.module';
 import { MoviesModule } from './movies/movies.module';
 import { SeatsModule } from './seats/seats.module';
 import { AuthModule } from './auth/auth.module';
+import { SeancesModule } from './seances/seances.module';
 
 @Module({
-  imports: [PrismaModule, ArticlesModule, UsersModule, MoviesModule, SeatsModule, AuthModule],
+  imports: [PrismaModule, ArticlesModule, UsersModule, MoviesModule, SeatsModule, AuthModule, SeancesModule],
   controllers: [AppController],
   providers: [AppService],
 })
