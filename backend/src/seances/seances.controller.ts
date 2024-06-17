@@ -13,7 +13,7 @@ import { UpdateSeanceDto } from './dto/update-seance.dto';
 import { SeancesService } from './seances.service';
 
 @Controller('seances')
-@ApiTags('seats')
+@ApiTags('seances')
 @ApiBearerAuth('access_token')
 export class SeancesController {
   constructor(private readonly seancesService: SeancesService) {}

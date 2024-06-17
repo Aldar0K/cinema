@@ -19,7 +19,7 @@ export class SeatsService {
   async findOne(id: number) {
     const seat = await this.prisma.seat.findUnique({
       where: { id },
-      include: { movie: true, claimedBy: true },
+      include: { seance: true, claimedBy: true },
     });
     if (!seat) {
       throw new HttpException('Seat not found', HttpStatus.NOT_FOUND);

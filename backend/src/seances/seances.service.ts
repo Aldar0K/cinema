@@ -1,29 +1,50 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { defaultPlacesPerRow, defaultRows } from './constants';
 import { CreateSeanceDto } from './dto/create-seance.dto';
 import { UpdateSeanceDto } from './dto/update-seance.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class SeancesService {
   constructor(private prisma: PrismaService) {}
-  
-  create(createSeanceDto: CreateSeanceDto) {
-    return this.prisma.seance.create({ data: createSeanceDto });
+
+  async create(createSeanceDto: CreateSeanceDto) {
+    const seance = await this.prisma.seance.create({ data: createSeanceDto });
+
+    for (let i = 1; i <= defaultRows; i++) {
+      for (let j = 1; j <= defaultPlacesPerRow; j++) {
+        this.prisma.seat.create({
+          data: {
+            seanceId: seance.id,
+            row: i,
+            place: j,
+          },
+        });
+      }
+    }
+
+    return seance;
   }
 
-  findAll() {
-    return `This action returns all seances`;
+  async findAll() {
+    return this.prisma.seance.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} seance`;
+  async findOne(id: number) {
+    return this.prisma.seance.findUnique({
+      where: { id },
+      include: { movie: true, seats: true },
+    });
   }
 
-  update(id: number, updateSeanceDto: UpdateSeanceDto) {
-    return `This action updates a #${id} seance`;
+  async update(id: number, updateSeanceDto: UpdateSeanceDto) {
+    return this.prisma.seance.update({
+      where: { id },
+      data: updateSeanceDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} seance`;
+  async remove(id: number) {
+    return this.prisma.seance.delete({ where: { id } });
   }
 }

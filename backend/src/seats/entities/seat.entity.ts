@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Seat } from '@prisma/client';
-import { MovieEntity } from 'src/movies/entities/movie.entity';
+import { SeanceEntity } from 'src/seances/entities/seance.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 
 export class SeatEntity implements Seat {
@@ -13,17 +13,17 @@ export class SeatEntity implements Seat {
   @ApiProperty()
   place: number;
 
+  @ApiProperty()
+  seance: SeanceEntity;
+
+  @ApiProperty()
+  seanceId: number;
+
   @ApiProperty({ required: false, nullable: true })
   userId: number | null;
 
   @ApiProperty({ required: false, nullable: true })
   claimedBy: UserEntity | null;
-
-  @ApiProperty()
-  movieId: number;
-
-  @ApiProperty()
-  movie: MovieEntity;
 
   @ApiProperty()
   version: number;

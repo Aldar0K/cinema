@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Movie } from '@prisma/client';
-import { SeatEntity } from 'src/seats/entities/seat.entity';
+import { SeanceEntity } from 'src/seances/entities/seance.entity';
 
 export class MovieEntity implements Movie {
   @ApiProperty()
@@ -10,5 +10,5 @@ export class MovieEntity implements Movie {
   name: string;
 
   @ApiProperty()
-  seats: SeatEntity[];
+  seances: SeanceEntity[];
 }
