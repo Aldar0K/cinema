@@ -8,32 +8,9 @@ import { roundsOfHashing } from '../src/auth/constants';
 const prisma = new PrismaClient();
 
 async function main() {
-  // create two dummy articles
-  const post1 = await prisma.article.upsert({
-    where: { title: 'Prisma Adds Support for MongoDB' },
-    update: {},
-    create: {
-      title: 'Prisma Adds Support for MongoDB',
-      body: 'Support for MongoDB has been one of the most requested features since the initial release of...',
-      description:
-        "We are excited to share that today's Prisma ORM release adds stable support for MongoDB!",
-      published: false,
-    },
-  });
-
-  const post2 = await prisma.article.upsert({
-    where: { title: "What's new in Prisma? (Q1/22)" },
-    update: {},
-    create: {
-      title: "What's new in Prisma? (Q1/22)",
-      body: 'Our engineers have been working hard, issuing new releases with many improvements...',
-      description:
-        'Learn about everything in the Prisma ecosystem and community from January to March 2022.',
-      published: true,
-    },
-  });
-
   await prisma.user.deleteMany();
+  await prisma.seance.deleteMany();
+  await prisma.seat.deleteMany();
 
   const password = await hash('1234', roundsOfHashing);
 
@@ -63,27 +40,24 @@ async function main() {
     },
   });
 
-  const seat1 = await prisma.seat.upsert({
-    where: { id: 1 },
-    update: {},
-    create: {
-      row: 1,
-      place: 1,
-      seanceId: seance1.id,
-    },
+  for (let i = 1; i <= 5; i++) {
+    for (let j = 1; j <= 10; j++) {
+      await prisma.seat.create({
+        data: {
+          row: i,
+          place: j,
+          seanceId: seance1.id,
+        },
+      });
+    }
+  }
+
+  const seance11 = await prisma.seance.findFirst({
+    where: { id: seance1.id },
+    include: { movie: true, seats: true },
   });
 
-  const seat2 = await prisma.seat.upsert({
-    where: { id: 2 },
-    update: {},
-    create: {
-      row: 1,
-      place: 2,
-      seanceId: seance1.id,
-    },
-  });
-
-  console.log({ post1, post2, admin, movie1, seance1, seat1, seat2 });
+  console.log({ admin, movie1, seance1, seance11 });
 }
 
 // execute the main function

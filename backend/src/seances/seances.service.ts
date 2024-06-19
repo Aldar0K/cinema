@@ -13,11 +13,11 @@ export class SeancesService {
 
     for (let i = 1; i <= defaultRows; i++) {
       for (let j = 1; j <= defaultPlacesPerRow; j++) {
-        this.prisma.seat.create({
+        await this.prisma.seat.create({
           data: {
-            seanceId: seance.id,
             row: i,
             place: j,
+            seanceId: seance.id,
           },
         });
       }
