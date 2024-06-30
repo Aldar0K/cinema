@@ -1,18 +1,14 @@
 import { FC } from "react";
 
 import { classNames } from "@/shared/utils";
-import cls from "./TemplateName.module.scss";
 
 const TemplateName: FC = () => {
   return (
-    <main
-      className={classNames(`main`, {}, [cls.main])}
-      data-testid="TemplateName"
-    >
+    <main className={classNames(`main`, {}, [])} data-testid="TemplateName">
       <Header />
 
-      <div className={`container ${cls.container}`}>
-        <div className={cls.content}>
+      <div className="">
+        <div className="">
           <h1>TemplateName</h1>
         </div>
       </div>

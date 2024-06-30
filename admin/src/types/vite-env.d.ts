@@ -29,8 +29,7 @@ declare type DeepPartial<T> = T extends object
 
 interface ImportMetaEnv {
   readonly VITE_IS_DEV: boolean;
-  readonly VITE_API_URL: string;
-  readonly VITE_GOOGLE_CLIENT_ID: string;
+  readonly VITE_BACKEND_URL: string;
   // more env variables...
 }
 
