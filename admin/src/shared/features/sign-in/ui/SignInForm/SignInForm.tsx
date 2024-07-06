@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { axiosClient } from "@/shared/api";
+import { CookieNames } from "@/shared/constants";
 import { authActions, useAppDispatch } from "@/shared/store";
 import {
   Button,
@@ -44,8 +45,6 @@ export const SignInForm: FC<SignInFormProps> = (props) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-
     setIsLoading(true);
     setErrorMessage("");
 
@@ -56,7 +55,9 @@ export const SignInForm: FC<SignInFormProps> = (props) => {
           setIsLoading(false);
         });
 
-      Cookies.set("token", response.data.accessToken);
+      Cookies.set(CookieNames.ACCESS_TOKEN, response.data.access_token, {
+        secure: true,
+      });
 
       dispatch(authActions.setUser({ username: response.data.username }));
       setSuccess(true);
