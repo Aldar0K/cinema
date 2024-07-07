@@ -1,1 +1,2 @@
-export * from "./axios.service";
+export { axiosClient, axiosPrivate } from "./api";
+export { baseApi } from "./base";
