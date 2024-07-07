@@ -1,10 +1,4 @@
-import {
-  BaseQueryApi,
-  FetchArgs,
-  FetchBaseQueryMeta,
-  createApi,
-  fetchBaseQuery,
-} from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import Cookie from "js-cookie";
 
 import { CookieNames } from "../constants";
@@ -23,25 +17,25 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-const baseQueryWithReauth = async (
-  args: FetchArgs,
-  api: BaseQueryApi,
-  extraOptions: FetchBaseQueryMeta,
-) => {
-  let result = await baseQuery(args, api, extraOptions);
+// const baseQueryWithReauth = async (
+//   args: FetchArgs,
+//   api: BaseQueryApi,
+//   extraOptions: FetchBaseQueryMeta,
+// ) => {
+//   let result = await baseQuery(args, api, extraOptions);
 
-  if (result?.error?.status === 401) {
-    Cookie.remove(CookieNames.ACCESS_TOKEN);
-  }
+//   if (result?.error?.status === 401) {
+//     Cookie.remove(CookieNames.ACCESS_TOKEN);
+//   }
 
-  if (result?.error?.status === 403) {
-    Cookie.remove(CookieNames.ACCESS_TOKEN);
-  }
+//   if (result?.error?.status === 403) {
+//     window.location.href = "/";
+//   }
 
-  return result;
-};
+//   return result;
+// };
 
 export const baseApi = createApi({
-  baseQuery: baseQueryWithReauth as any,
+  baseQuery,
   endpoints: () => ({}),
 });

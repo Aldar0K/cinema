@@ -55,9 +55,9 @@ export const SignInForm: FC<SignInFormProps> = (props) => {
           setIsLoading(false);
         });
 
-      Cookies.set(CookieNames.ACCESS_TOKEN, response.data.access_token, {
-        secure: true,
-      });
+      // Cookies.set(CookieNames.ACCESS_TOKEN, response.data.access_token, {
+      //   secure: true,
+      // });
 
       dispatch(authActions.setUser({ username: response.data.username }));
       setSuccess(true);

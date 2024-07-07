@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, Res } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { Public } from './decorators';
@@ -14,15 +14,35 @@ export class AuthController {
   @Post('sign-up')
   @Public()
   @ApiCreatedResponse({})
-  signUp(@Body() signUpDto: SignUpDto) {
-    return this.authService.signUp(signUpDto);
+  async signUp(
+    @Body() signUpDto: SignUpDto,
+    @Res({ passthrough: true }) response,
+  ) {
+    const { access_token } = await this.authService.signUp(signUpDto);
+
+    response.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure: true,
+    });
+
+    return { success: true };
   }
 
   @Post('sign-in')
   @Public()
   @ApiCreatedResponse({})
-  signIn(@Body() signInDto: SignInDto) {
-    return this.authService.signIn(signInDto);
+  async signIn(
+    @Body() signInDto: SignInDto,
+    @Res({ passthrough: true }) response,
+  ) {
+    const { access_token } = await this.authService.signIn(signInDto);
+
+    response.cookie('access_token', access_token, {
+      httpOnly: true,
+      secure: true,
+    });
+
+    return { success: true };
   }
 
   @Get('profile')

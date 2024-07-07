@@ -4,6 +4,13 @@ import { CookieNames } from "../constants";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
 
+const $api = axios.create({
+  baseURL: BACKEND_URL,
+  headers: {
+    Authorization: `Bearer ${Cookies.get(CookieNames.ACCESS_TOKEN)}`,
+  },
+});
+
 const axiosClient = axios.create({
   baseURL: BACKEND_URL,
   headers: {
@@ -34,4 +41,4 @@ axiosPrivate.interceptors.response.use(
   },
 );
 
-export { axiosClient, axiosPrivate };
+export { $api, axiosClient, axiosPrivate };
