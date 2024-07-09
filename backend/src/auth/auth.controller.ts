@@ -25,7 +25,7 @@ export class AuthController {
       secure: true,
     });
 
-    return { success: true };
+    return { success: true, email: signUpDto.email };
   }
 
   @Post('sign-in')
@@ -42,7 +42,7 @@ export class AuthController {
       secure: true,
     });
 
-    return { success: true };
+    return { success: true, email: signInDto.email };
   }
 
   @Get('profile')

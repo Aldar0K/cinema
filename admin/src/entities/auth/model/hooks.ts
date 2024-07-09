@@ -1,9 +1,7 @@
-import Cookies from "js-cookie";
-
-import { CookieNames } from "@/shared/constants";
+import { getEmail, useAppSelect } from "@/shared/store";
 
 export const useAuth = () => {
-  const token = Cookies.get(CookieNames.ACCESS_TOKEN);
+  const email = useAppSelect(getEmail);
 
-  return !!token;
+  return !!email;
 };

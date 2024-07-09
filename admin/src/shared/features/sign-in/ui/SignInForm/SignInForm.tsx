@@ -1,12 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import Cookies from "js-cookie";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { axiosClient } from "@/shared/api";
-import { CookieNames } from "@/shared/constants";
-import { authActions, useAppDispatch } from "@/shared/store";
 import {
   Button,
   Form,
@@ -31,7 +28,7 @@ type SignInFormProps = {
 
 export const SignInForm: FC<SignInFormProps> = (props) => {
   const { className } = props;
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
@@ -55,11 +52,7 @@ export const SignInForm: FC<SignInFormProps> = (props) => {
           setIsLoading(false);
         });
 
-      // Cookies.set(CookieNames.ACCESS_TOKEN, response.data.access_token, {
-      //   secure: true,
-      // });
-
-      dispatch(authActions.setUser({ username: response.data.username }));
+      // dispatch(authActions.setUser({ email: response.data.email }));
       setSuccess(true);
     } catch (error) {
       setErrorMessage((error as any).response.data.message);

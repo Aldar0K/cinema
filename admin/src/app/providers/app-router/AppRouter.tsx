@@ -1,14 +1,12 @@
 import { FC, useMemo } from "react";
 import { Routes } from "react-router-dom";
 
-import { useAuth } from "@/entities/auth";
 import { AdminRoutes } from "./AdminRoutes";
 import { CommonRoutes } from "./CommonRoutes";
 import { UnauthorizedRoutes } from "./UnauthorizedRoutes";
 
 const AppRouter: FC = () => {
-  // const isAuth = useAuth();
-  const isAuth = false;
+  const isAuth = true;
 
   const UserRoutes = useMemo(() => {
     if (isAuth) {
