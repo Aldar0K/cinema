@@ -1,19 +1,37 @@
 version: "3.8"
 
 services:
-  frontend:
-    container_name: frontend
+  # frontend:
+  #   container_name: frontend
+  #   platform: linux/amd64
+  #   build:
+  #     context: ../frontend
+  #     dockerfile: ../cinema-dev-config/Dockerfile.frontend
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ../frontend:/usr/app
+  #   environment:
+  #     API_TOKEN: ${API_TOKEN}
+  #     API_URL: ${API_URL}
+  #   networks:
+  #     - cinema
+
+  admin:
+    container_name: admin
     platform: linux/amd64
     build:
-      context: ../frontend
-      dockerfile: ../cinema-dev-config/Dockerfile.frontend
+      context: ../admin
+      dockerfile: ../cinema-dev-config/Dockerfile.admin
     ports:
       - "3000:3000"
     volumes:
-      - ../frontend:/usr/app
+      - ../admin:/usr/app
     environment:
       API_TOKEN: ${API_TOKEN}
       API_URL: ${API_URL}
+      VITE_IS_DEV: true
+      VITE_BACKEND_URL: http://localhost:3001
     networks:
       - cinema
 

@@ -1,20 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import Cookie from "js-cookie";
-
-import { CookieNames } from "../constants";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_BACKEND_URL ?? "",
-  // credentials: 'include',
-  prepareHeaders: (headers) => {
-    const accessToken = Cookie.get(CookieNames.ACCESS_TOKEN);
+  credentials: "include",
+  // prepareHeaders: (headers) => {
+  //   const accessToken = Cookie.get(CookieNames.ACCESS_TOKEN);
 
-    if (accessToken) {
-      headers.set("Authorization", `Bearer ${accessToken}`);
-    }
+  //   if (accessToken) {
+  //     headers.set("Authorization", `Bearer ${accessToken}`);
+  //   }
 
-    return headers;
-  },
+  //   return headers;
+  // },
 });
 
 // const baseQueryWithReauth = async (

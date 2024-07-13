@@ -1,19 +1,18 @@
 import { Suspense } from "react";
-import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
-import { store } from "@/shared/store";
 import { AppRouter } from "./providers/app-router";
+import { StoreProvider } from "./providers/store-provider";
 
 const App = () => {
   return (
-    <Provider store={store}>
+    <StoreProvider>
       <BrowserRouter>
         <Suspense fallback={<h2>Loading...</h2>}>
           <AppRouter />
         </Suspense>
       </BrowserRouter>
-    </Provider>
+    </StoreProvider>
   );
 };
 

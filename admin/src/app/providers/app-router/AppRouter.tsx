@@ -6,7 +6,7 @@ import { CommonRoutes } from "./CommonRoutes";
 import { UnauthorizedRoutes } from "./UnauthorizedRoutes";
 
 const AppRouter: FC = () => {
-  const isAuth = true;
+  const isAuth = false;
 
   const UserRoutes = useMemo(() => {
     if (isAuth) {

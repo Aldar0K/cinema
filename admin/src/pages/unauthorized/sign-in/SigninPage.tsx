@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { SignInForm } from "@/shared/features";
+import { SignInForm } from "@/features";
 import { classNames } from "@/shared/utils";
 
 const SigninPage: FC = () => {

@@ -5,7 +5,12 @@ import {
   ReducersMapObject,
 } from "@reduxjs/toolkit";
 
-export type StateSchema = {};
+import { AuthSchema, authApi } from "@/entities/auth";
+
+export type StateSchema = {
+  auth: AuthSchema;
+  [authApi.reducerPath]: ReturnType<typeof authApi.reducer>;
+};
 
 export type StateSchemaKey = keyof StateSchema;
 
