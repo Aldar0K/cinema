@@ -1,6 +1,5 @@
 export interface AuthSchema {
-  accessToken: string | null;
-  refreshToken: string | null;
+  email?: string;
 }
 
 export type LoginDto = {
@@ -9,8 +8,8 @@ export type LoginDto = {
 };
 
 export type LoginResponse = {
-  accessToken: string;
-  refreshToken: string;
+  email: string;
+  success: boolean;
 };
 
 export type RefreshTokenDto = {

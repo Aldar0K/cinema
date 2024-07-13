@@ -1,6 +1,7 @@
 import { baseApi } from "@/shared/api";
 import { handleError } from "@/shared/utils";
 
+import { authActions } from "..";
 import {
   LoginDto,
   LoginResponse,
@@ -29,9 +30,14 @@ export const authApi = baseApi.injectEndpoints({
         body: dto,
       }),
       onQueryStarted: (_, api) => {
-        api.queryFulfilled.catch((error) => {
-          handleError(error);
-        });
+        api.queryFulfilled
+          .then((response) => {
+            console.log("response", response);
+            api.dispatch(authActions.setUser({ email: response.data.email }));
+          })
+          .catch((error) => {
+            handleError(error);
+          });
       },
     }),
   }),

@@ -1,23 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { AuthSchema, LoginResponse, RegistrationResponse } from "./types";
+import { AuthSchema } from "./types";
 
 const initialState: AuthSchema = {
-  accessToken: null,
-  refreshToken: null,
+  email: undefined,
 };
 
 const authSlice = createSlice({
   initialState,
   name: "auth",
   reducers: {
-    signUp: (state, { payload }: PayloadAction<RegistrationResponse>) => {
-      state.accessToken = payload.accessToken;
-      state.refreshToken = payload.refreshToken;
-    },
-    signIn: (state, { payload }: PayloadAction<LoginResponse>) => {
-      state.accessToken = payload.accessToken;
-      state.refreshToken = payload.refreshToken;
+    setUser: (state, { payload }: PayloadAction<{ email: string }>) => {
+      state.email = payload.email;
     },
     signOut: () => initialState,
   },

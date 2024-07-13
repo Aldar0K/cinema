@@ -41,13 +41,11 @@ export const SignInForm: FC<SignInFormProps> = (props) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setErrorMessage("");
-    console.log(values);
 
     const response = await loginMutate({
       email: values.email,
       password: values.password,
     });
-    console.log(response);
 
     // try {
     //   const response = await axiosClient

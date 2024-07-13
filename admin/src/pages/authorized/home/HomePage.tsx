@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from "react";
 
 import { Movie } from "@/entities/movie";
-import { axiosPrivate } from "@/shared/api";
 import { classNames } from "@/shared/utils";
+import axios from "axios";
 
 const HomePage: FC = () => {
   // const { data: movies } = useGetMoviesQuery();
@@ -10,7 +10,12 @@ const HomePage: FC = () => {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const response = await axiosPrivate.get("/movies");
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/movies`,
+        {
+          withCredentials: true,
+        },
+      );
       const movies = response.data as Movie[];
       setMovies(movies);
     };

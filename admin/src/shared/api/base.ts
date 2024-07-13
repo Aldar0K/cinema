@@ -1,38 +1,36 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { authActions } from "@/entities/auth";
+import {
+  BaseQueryApi,
+  FetchArgs,
+  FetchBaseQueryMeta,
+  createApi,
+  fetchBaseQuery,
+} from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_BACKEND_URL ?? "",
   credentials: "include",
-  // prepareHeaders: (headers) => {
-  //   const accessToken = Cookie.get(CookieNames.ACCESS_TOKEN);
-
-  //   if (accessToken) {
-  //     headers.set("Authorization", `Bearer ${accessToken}`);
-  //   }
-
-  //   return headers;
-  // },
 });
 
-// const baseQueryWithReauth = async (
-//   args: FetchArgs,
-//   api: BaseQueryApi,
-//   extraOptions: FetchBaseQueryMeta,
-// ) => {
-//   let result = await baseQuery(args, api, extraOptions);
+const baseQueryWithReauth = async (
+  args: FetchArgs,
+  api: BaseQueryApi,
+  extraOptions: FetchBaseQueryMeta,
+) => {
+  const result = await baseQuery(args, api, extraOptions);
+  console.log("result", result);
 
-//   if (result?.error?.status === 401) {
-//     Cookie.remove(CookieNames.ACCESS_TOKEN);
-//   }
+  // TODO add refresh token handler
 
-//   if (result?.error?.status === 403) {
-//     window.location.href = "/";
-//   }
+  if (result?.error?.status === 401 || result?.error?.status === 403) {
+    console.log("logout");
+    api.dispatch(authActions.signOut());
+  }
 
-//   return result;
-// };
+  return result;
+};
 
-export const baseApi = createApi({
-  baseQuery,
+export const api = createApi({
+  baseQuery: baseQueryWithReauth,
   endpoints: () => ({}),
 });

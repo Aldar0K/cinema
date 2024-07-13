@@ -1,2 +1,2 @@
-export { $api, axiosClient, axiosPrivate } from "./api";
-export { baseApi } from "./base";
+export { $api } from "./api";
+export { api as baseApi } from "./base";
