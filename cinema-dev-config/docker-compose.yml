@@ -1,56 +1,8 @@
 version: "3.8"
 
 services:
-  # frontend:
-  #   container_name: frontend
-  #   platform: linux/amd64
-  #   build:
-  #     context: ../frontend
-  #     dockerfile: ../cinema-dev-config/Dockerfile.frontend
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ../frontend:/usr/app
-  #   environment:
-  #     API_TOKEN: ${API_TOKEN}
-  #     API_URL: ${API_URL}
-  #   networks:
-  #     - cinema
-
-  admin:
-    container_name: admin
-    platform: linux/amd64
-    build:
-      context: ../admin
-      dockerfile: ../cinema-dev-config/Dockerfile.admin
-    ports:
-      - "3000:3000"
-    volumes:
-      - ../admin:/usr/app
-    environment:
-      API_TOKEN: ${API_TOKEN}
-      API_URL: ${API_URL}
-      VITE_IS_DEV: true
-      VITE_BACKEND_URL: http://localhost:3001
-    networks:
-      - cinema
-
-  backend:
-    container_name: backend
-    platform: linux/amd64
-    build:
-      context: ../backend
-      dockerfile: ../cinema-dev-config/Dockerfile.backend
-    ports:
-      - "3001:3001"
-    volumes:
-      - ../backend:/usr/app
-    environment:
-      DATABASE_URL: "postgresql://admin:admin@localhost:5432/db?schema=public"
-    networks:
-      - cinema
-
   db:
+    container_name: db
     platform: linux/amd64
     image: postgres:14.1-alpine
     restart: always
@@ -65,7 +17,40 @@ services:
     networks:
       - cinema
 
+  # backend:
+  #   container_name: backend
+  #   platform: linux/amd64
+  #   build:
+  #     context: ../backend
+  #     dockerfile: ../cinema-dev-config/Dockerfile.backend
+  #   ports:
+  #     - "3001:3001"
+  #   volumes:
+  #     - ../backend:/usr/app
+  #   environment:
+  #     DATABASE_URL: "postgresql://admin:admin@localhost:5432/db?schema=public"
+  #   networks:
+  #     - cinema
+
+  admin:
+    container_name: admin
+    platform: linux/amd64
+    build:
+      context: ../admin
+      dockerfile: ../cinema-dev-config/Dockerfile.admin
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../admin:/usr/app
+      - node_modules:/usr/app/node_modules
+    environment:
+      VITE_IS_DEV: ${VITE_IS_DEV}
+      VITE_BACKEND_URL: ${VITE_BACKEND_URL}
+    networks:
+      - cinema
+
 networks:
   cinema:
 volumes:
   db:
+  node_modules:

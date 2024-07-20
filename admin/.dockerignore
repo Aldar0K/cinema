@@ -2,6 +2,7 @@ README.md
 build
 dist
 node_modules
+/node_modules
 LICENSE
 .git
 .DS_Store
