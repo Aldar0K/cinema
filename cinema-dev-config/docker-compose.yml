@@ -17,20 +17,22 @@ services:
     networks:
       - cinema
 
-  # backend:
-  #   container_name: backend
-  #   platform: linux/amd64
-  #   build:
-  #     context: ../backend
-  #     dockerfile: ../cinema-dev-config/Dockerfile.backend
-  #   ports:
-  #     - "3001:3001"
-  #   volumes:
-  #     - ../backend:/usr/app
-  #   environment:
-  #     DATABASE_URL: "postgresql://admin:admin@localhost:5432/db?schema=public"
-  #   networks:
-  #     - cinema
+  backend:
+    container_name: backend
+    platform: linux/amd64
+    build:
+      context: ../backend
+      dockerfile: ../cinema-dev-config/Dockerfile.backend
+    ports:
+      - "3001:3001"
+    volumes:
+      - ../backend:/usr/app
+      - backend-node_modules:/usr/app/node_modules
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      HASH_SALT: ${HASH_SALT}
+    networks:
+      - cinema
 
   admin:
     container_name: admin
@@ -42,7 +44,7 @@ services:
       - "3000:3000"
     volumes:
       - ../admin:/usr/app
-      - node_modules:/usr/app/node_modules
+      - admin-node_modules:/usr/app/node_modules
     environment:
       VITE_IS_DEV: ${VITE_IS_DEV}
       VITE_BACKEND_URL: ${VITE_BACKEND_URL}
@@ -53,4 +55,5 @@ networks:
   cinema:
 volumes:
   db:
-  node_modules:
+  backend-node_modules:
+  admin-node_modules:
