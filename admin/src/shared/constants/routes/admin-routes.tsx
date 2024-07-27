@@ -1,16 +1,12 @@
 import { Navigate, RouteProps } from "react-router-dom";
 
 import { AuthorizedLayout } from "@/layouts/authorized";
-import { HomePage } from "@/pages/authorized";
+import { HomePage, MoviesPage } from "@/pages/authorized";
 
 export enum AdminRoutes {
   MAIN = "main",
-  ANALYTICS = "analytics",
+  MOVIES = "movies",
   USERS = "users",
-  MATERIALS = "materials",
-  COURSE = "course",
-  COURSE_IN_FOLDER = "course-in-folder",
-  HOMEWORK = "homework",
   FINANCE = "finance",
   SETTINGS = "settings",
   PROFILE = "profile",
@@ -19,12 +15,8 @@ export enum AdminRoutes {
 
 export const AdminPaths: Record<AdminRoutes, string> = {
   [AdminRoutes.MAIN]: "/",
-  [AdminRoutes.ANALYTICS]: "/analytics",
+  [AdminRoutes.MOVIES]: "/movies",
   [AdminRoutes.USERS]: "/users",
-  [AdminRoutes.MATERIALS]: "/materials",
-  [AdminRoutes.COURSE]: "/materials/courses/:courseId",
-  [AdminRoutes.COURSE_IN_FOLDER]: "materials/:folderId/:courseId",
-  [AdminRoutes.HOMEWORK]: "/homework",
   [AdminRoutes.FINANCE]: "/finance",
   [AdminRoutes.SETTINGS]: "/settings",
   [AdminRoutes.PROFILE]: "/profile",
@@ -40,11 +32,11 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
       </AuthorizedLayout>
     ),
   },
-  [AdminRoutes.ANALYTICS]: {
-    path: AdminPaths[AdminRoutes.ANALYTICS],
+  [AdminRoutes.MOVIES]: {
+    path: AdminPaths[AdminRoutes.MOVIES],
     element: (
       <AuthorizedLayout>
-        <h1>AnalyticsPage</h1>
+        <MoviesPage />
       </AuthorizedLayout>
     ),
   },
@@ -53,38 +45,6 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
     element: (
       <AuthorizedLayout>
         <h1>UsersPage</h1>
-      </AuthorizedLayout>
-    ),
-  },
-  [AdminRoutes.MATERIALS]: {
-    path: AdminPaths[AdminRoutes.MATERIALS],
-    element: (
-      <AuthorizedLayout>
-        <h1>MaterialsPage</h1>
-      </AuthorizedLayout>
-    ),
-  },
-  [AdminRoutes.HOMEWORK]: {
-    path: AdminPaths[AdminRoutes.HOMEWORK],
-    element: (
-      <AuthorizedLayout>
-        <h1>HomeworkPage</h1>
-      </AuthorizedLayout>
-    ),
-  },
-  [AdminRoutes.COURSE]: {
-    path: AdminPaths[AdminRoutes.COURSE],
-    element: (
-      <AuthorizedLayout>
-        <h1>CoursePage</h1>
-      </AuthorizedLayout>
-    ),
-  },
-  [AdminRoutes.COURSE_IN_FOLDER]: {
-    path: AdminPaths[AdminRoutes.COURSE_IN_FOLDER],
-    element: (
-      <AuthorizedLayout>
-        <h1>CourseInFolderPage</h1>
       </AuthorizedLayout>
     ),
   },

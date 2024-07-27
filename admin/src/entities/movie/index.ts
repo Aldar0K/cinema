@@ -1,2 +1,2 @@
-export * from "./model/movieApi";
+export * from "./model/api";
 export * from "./model/types";
