@@ -8,8 +8,6 @@ const MoviesPage: FC = () => {
 
   return (
     <main className={classNames(`main`, {}, [])} data-testid="MoviesPage">
-      {/* <Header /> */}
-
       <div className="">
         <div className="">
           <h1>MoviesPage</h1>
