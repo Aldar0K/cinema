@@ -1,14 +1,16 @@
 import { FC } from "react";
 
-import { classNames } from "@/shared/utils";
+import { cn } from "@/shared/utils";
+import { Header } from "@/widgets";
+import cls from "./HomePage.module.scss";
 
 const HomePage: FC = () => {
   return (
-    <main className={classNames(`main`, {}, [])} data-testid="HomePage">
-      {/* <Header /> */}
+    <main className={cn(`main`, {}, [])} data-testid="HomePage">
+      <Header />
 
-      <div className="">
-        <div className="">
+      <div className={cn(cls.container)}>
+        <div className={cn(cls.content)}>
           <h1>HomePage</h1>
         </div>
       </div>

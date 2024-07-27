@@ -1,7 +1,6 @@
 import { FC } from "react";
 
-import { classNames } from "@/shared/utils";
-import cls from "./TemplateName.module.scss";
+import { cn } from "@/shared/utils";
 
 type TemplateNameProps = {
   className?: string;
@@ -13,7 +12,7 @@ export const TemplateName: FC<TemplateNameProps> = (props) => {
   return (
     <section
       id="template-name"
-      className={classNames(cls.section, {}, [className])}
+      className={cn("", className)}
       data-testid="TemplateName"
     >
       TemplateName

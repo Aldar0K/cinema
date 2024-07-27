@@ -7,40 +7,37 @@
     "default": {
       "path": "src",
       "withIndex": true,
-      "withStyle": true,
+      "withStyle": false,
       "withTest": false,
       "withStory": false,
       "withLazy": false,
       "customTemplates": {
         "index": "templates/component/index.ts",
-        "style": "templates/component/TemplateName.module.scss",
         "component": "templates/component/TemplateName.tsx"
       }
     },
     "lazy": {
       "path": "src",
       "withIndex": true,
-      "withStyle": true,
+      "withStyle": false,
       "withTest": false,
       "withStory": false,
       "withLazy": true,
       "customTemplates": {
         "index": "templates/component-lazy/index.ts",
         "lazy": "templates/component-lazy/TemplateName.lazy.tsx",
-        "style": "templates/component-lazy/TemplateName.module.scss",
         "component": "templates/component-lazy/TemplateName.tsx"
       }
     },
     "section": {
       "path": "src",
       "withIndex": true,
-      "withStyle": true,
+      "withStyle": false,
       "withTest": false,
       "withStory": false,
       "withLazy": false,
       "customTemplates": {
         "index": "templates/section/index.ts",
-        "style": "templates/section/TemplateName.module.scss",
         "component": "templates/section/TemplateName.tsx"
       }
     },

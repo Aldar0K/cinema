@@ -18,12 +18,10 @@ const baseQueryWithReauth = async (
   extraOptions: FetchBaseQueryMeta,
 ) => {
   const result = await baseQuery(args, api, extraOptions);
-  console.log("result", result);
 
   // TODO add refresh token handler
 
   if (result?.error?.status === 401 || result?.error?.status === 403) {
-    console.log("logout");
     api.dispatch(authActions.signOut());
   }
 
