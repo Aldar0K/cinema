@@ -4,6 +4,17 @@ import { roundsOfHashing } from '../src/auth/constants';
 
 const prisma = new PrismaClient();
 
+const createSeatLayout = (rows: number, seatsPerRow: number) =>
+  Array.from({ length: rows }, (_, rowIndex) =>
+    Array.from({ length: seatsPerRow }, (_, seatIndex) => ({
+      row: rowIndex + 1,
+      place: seatIndex + 1,
+    })),
+  ).flat();
+
+// Generate 5 rows with 10 seats each:
+const seats = createSeatLayout(5, 10);
+
 async function main() {
   console.log('Clearing existing data...');
   await prisma.seat.deleteMany();
@@ -29,10 +40,7 @@ async function main() {
           {
             time: new Date(),
             seats: {
-              create: Array.from({ length: 50 }, (_, index) => ({
-                row: Math.floor(index / 10) + 1,
-                place: (index % 10) + 1,
-              })),
+              create: seats,
             },
           },
         ],
