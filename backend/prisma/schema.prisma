@@ -14,11 +14,12 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
-  password String
-  articles Article[]
-  seats    Seat[]
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  password     String
+  articles     Article[]
+  seats        Seat[]
+  reservations Reservation[]
 }
 
 model Article {
@@ -48,12 +49,40 @@ model Seance {
 }
 
 model Seat {
-  id        Int       @id @default(autoincrement())
-  row       Int
-  place     Int
-  seance    Seance?   @relation(fields: [seanceId], references: [id])
-  seanceId  Int?
-  userId    Int?
-  claimedBy User?     @relation(fields: [userId], references: [id])
-  version   Int       @default(0)
+  id            Int          @id @default(autoincrement())
+  row           Int
+  place         Int
+  status        SeatStatus   @default(AVAILABLE)
+  seance        Seance?      @relation(fields: [seanceId], references: [id])
+  seanceId      Int?
+  userId        Int?
+  claimedBy     User?        @relation(fields: [userId], references: [id])
+  version       Int          @default(0)
+  Reservation   Reservation? @relation(fields: [reservationId], references: [id])
+  reservationId Int?
+
+  @@unique([row, place, seanceId])
+  @@index([seanceId, status])
+}
+
+enum SeatStatus {
+  AVAILABLE
+  RESERVED
+  BOOKED
+}
+
+model Reservation {
+  id        Int               @id @default(autoincrement())
+  user      User              @relation(fields: [userId], references: [id])
+  userId    Int
+  seats     Seat[]
+  totalCost Float
+  status    ReservationStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELED
 }
