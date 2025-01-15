@@ -34,6 +34,21 @@ services:
     networks:
       - cinema
 
+  prisma-studio:
+    container_name: prisma-studio
+    image: node:16-alpine
+    working_dir: /usr/app
+    volumes:
+      - ../backend:/usr/app
+      - backend-node_modules:/usr/app/node_modules
+    command: sh -c "npx prisma studio --port 5555"
+    ports:
+      - "5555:5555"
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    networks:
+      - cinema
+
   admin:
     container_name: admin
     platform: linux/amd64
