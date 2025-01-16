@@ -1,16 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { roundsOfHashing } from '../src/auth/constants';
+import { createSeatLayout } from '../src/utils';
 
 const prisma = new PrismaClient();
-
-const createSeatLayout = (rows: number, seatsPerRow: number) =>
-  Array.from({ length: rows }, (_, rowIndex) =>
-    Array.from({ length: seatsPerRow }, (_, seatIndex) => ({
-      row: rowIndex + 1,
-      place: seatIndex + 1,
-    })),
-  ).flat();
 
 // Generate 5 rows with 10 seats each:
 const seats = createSeatLayout(5, 10);

@@ -1,0 +1,1 @@
+export { createSeatLayout } from './createSeatLayout';
