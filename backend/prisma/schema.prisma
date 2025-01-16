@@ -62,7 +62,7 @@ model Seat {
   reservationId Int?
 
   @@unique([row, place, seanceId])
-  @@index([seanceId, status])
+  @@index([seanceId, status, userId])
 }
 
 enum SeatStatus {
