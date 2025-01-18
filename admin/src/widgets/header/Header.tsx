@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Navigation, ViewerProfile } from "@/features";
+import { Navigation, ThemeSwitch, ViewerProfile } from "@/features";
 import { cn } from "@/shared/utils";
 
 export type HeaderProps = {
@@ -20,7 +20,11 @@ const Header: FC<HeaderProps> = (props) => {
       data-testid="Header"
     >
       <Navigation />
-      <ViewerProfile />
+
+      <div className="flex items-center gap-[16px]">
+        <ThemeSwitch />
+        <ViewerProfile />
+      </div>
     </div>
   );
 };
