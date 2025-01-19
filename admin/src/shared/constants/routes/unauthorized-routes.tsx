@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import { Navigate, RouteProps } from "react-router-dom";
 
 import { UnauthorizedLayout } from "@/layouts/unauthorized";
 import { SigninPage } from "@/pages/unauthorized";
+import { PageSkeleton } from "@/shared/ui";
 
 export enum UnauthorizedRoutes {
   SIGNIN = "sign-in",
@@ -20,7 +22,9 @@ export const UnauthorizedRouteConfig: Record<UnauthorizedRoutes, RouteProps> = {
     path: UnauthorizedPaths[UnauthorizedRoutes.SIGNIN],
     element: (
       <UnauthorizedLayout>
-        <SigninPage />
+        <Suspense fallback={<PageSkeleton />}>
+          <SigninPage />
+        </Suspense>
       </UnauthorizedLayout>
     ),
   },
@@ -28,7 +32,9 @@ export const UnauthorizedRouteConfig: Record<UnauthorizedRoutes, RouteProps> = {
     path: UnauthorizedPaths[UnauthorizedRoutes.RESET_PASSWORD],
     element: (
       <UnauthorizedLayout>
-        <h1>ResetPasswordPage</h1>
+        <Suspense fallback={<PageSkeleton />}>
+          <h1>ResetPasswordPage</h1>
+        </Suspense>
       </UnauthorizedLayout>
     ),
   },

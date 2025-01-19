@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import { RouteProps } from "react-router-dom";
 
 import { CommonLayout } from "@/layouts/common";
+import { PageSkeleton } from "@/shared/ui";
 
 export enum CommonRoutes {
   COOKIES_POLICY = "cookies-policy",
@@ -17,18 +19,20 @@ export const CommonRouteConfig: Record<CommonRoutes, RouteProps> = {
     path: CommonPaths[CommonRoutes.COOKIES_POLICY],
     element: (
       <CommonLayout>
-        <h1>CookiesPolicyPage</h1>
+        <Suspense fallback={<PageSkeleton />}>
+          <h1>CookiesPolicyPage</h1>
+        </Suspense>
       </CommonLayout>
     ),
-    // layout: DefaultLayout,
   },
   [CommonRoutes.NOT_FOUND]: {
     path: CommonPaths[CommonRoutes.NOT_FOUND],
     element: (
       <CommonLayout>
-        <h1>SomeNotFoundPage</h1>
+        <Suspense fallback={<PageSkeleton />}>
+          <h1>SomeNotFoundPage</h1>
+        </Suspense>
       </CommonLayout>
     ),
-    // layout: DefaultLayout,
   },
 };

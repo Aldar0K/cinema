@@ -3,7 +3,7 @@ import { FC } from "react";
 import { authActions } from "@/entities/auth";
 import { useGetViewerQuery } from "@/entities/viewer";
 import { useAppDispatch } from "@/shared/hooks";
-import { Button } from "@/shared/ui";
+import { Button, Skeleton } from "@/shared/ui";
 import { cn } from "@/shared/utils";
 
 type ViewerProfileProps = {
@@ -20,7 +20,15 @@ const ViewerProfile: FC<ViewerProfileProps> = (props) => {
   };
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return (
+      <div
+        className={cn("p-4", "flex items-center gap-[16px]", className)}
+        data-testid="ViewerProfile"
+      >
+        <Skeleton className="h-[20px] w-[152px]" />
+        <Skeleton className="h-[40px] w-[76px]" />
+      </div>
+    );
   }
 
   if (!data) {

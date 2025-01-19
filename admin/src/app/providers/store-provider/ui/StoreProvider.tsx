@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
+import { PageSkeleton } from "@/shared/ui";
 import { createReduxStore } from "../model/store";
 import { StateSchema } from "../model/types";
 
@@ -24,7 +25,7 @@ export const StoreProvider: FC<StoreProviderProps> = (props) => {
   const persistor = persistStore(store);
 
   return (
-    <PersistGate loading={<h2>Loading...</h2>} persistor={persistor}>
+    <PersistGate loading={<PageSkeleton />} persistor={persistor}>
       <Provider store={store}>{children}</Provider>
     </PersistGate>
   );

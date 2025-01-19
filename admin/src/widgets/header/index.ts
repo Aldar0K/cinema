@@ -1,1 +1,1 @@
-export { HeaderLazy as Header } from "./Header.lazy";
+export { Header } from "./ui";
