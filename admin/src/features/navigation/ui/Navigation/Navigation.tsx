@@ -11,6 +11,8 @@ type NavigationProps = {
 export const Navigation: FC<NavigationProps> = (props) => {
   const { className } = props;
 
+  // TODO add routes for all roles
+
   return (
     <div className={cn("flex", className)} data-testid="Navigation">
       <ul className="flex items-center gap-[16px]">
