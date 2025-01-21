@@ -1,1 +1,4 @@
-export { MoviesPageLazy as MoviesPage } from "./MoviesPage.lazy";
+export {
+  MoviesPageLazy as MoviesPage,
+  preloadMoviesPage,
+} from "./MoviesPage.lazy";

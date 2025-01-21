@@ -14,9 +14,14 @@ export const Navigation: FC<NavigationProps> = (props) => {
   return (
     <div className={cn("flex", className)} data-testid="Navigation">
       <ul className="flex items-center gap-[16px]">
-        {adminNavigationLinks.map((link) => (
-          <Link key={link.link} to={link.link}>
-            {link.title}
+        {adminNavigationLinks.map(({ link, title, preloadFn }) => (
+          <Link
+            key={link}
+            to={link}
+            onMouseEnter={preloadFn}
+            onFocus={preloadFn}
+          >
+            {title}
           </Link>
         ))}
       </ul>

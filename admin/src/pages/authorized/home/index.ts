@@ -1,1 +1,1 @@
-export { HomePageLazy as HomePage } from "./HomePage.lazy";
+export { HomePageLazy as HomePage, preloadHomePage } from "./HomePage.lazy";

@@ -1,7 +1,12 @@
 import { Navigate, RouteProps } from "react-router-dom";
 
 import { AuthorizedLayout } from "@/layouts/authorized";
-import { HomePage, MoviesPage } from "@/pages/authorized";
+import {
+  HomePage,
+  MoviesPage,
+  preloadHomePage,
+  preloadMoviesPage,
+} from "@/pages/authorized";
 import { NavigationLink } from "@/shared/types";
 
 export enum AdminRoutes {
@@ -30,10 +35,12 @@ export const adminNavigationLinks: NavigationLink[] = [
   {
     title: "Главная",
     link: AdminPaths[AdminRoutes.MAIN],
+    preloadFn: preloadHomePage,
   },
   {
     title: "Фильмы",
     link: AdminPaths[AdminRoutes.MOVIES],
+    preloadFn: preloadMoviesPage,
   },
   {
     title: "Сеансы",
