@@ -3,7 +3,7 @@ import { Navigate, RouteProps } from "react-router-dom";
 
 import { UnauthorizedLayout } from "@/layouts/unauthorized";
 import { SigninPage } from "@/pages/unauthorized";
-import { PageSkeleton } from "@/shared/ui";
+import { PageSkeleton, PageTransition } from "@/shared/ui";
 
 export enum UnauthorizedRoutes {
   SIGNIN = "sign-in",
@@ -23,7 +23,9 @@ export const UnauthorizedRouteConfig: Record<UnauthorizedRoutes, RouteProps> = {
     element: (
       <UnauthorizedLayout>
         <Suspense fallback={<PageSkeleton />}>
-          <SigninPage />
+          <PageTransition>
+            <SigninPage />
+          </PageTransition>
         </Suspense>
       </UnauthorizedLayout>
     ),
@@ -33,7 +35,9 @@ export const UnauthorizedRouteConfig: Record<UnauthorizedRoutes, RouteProps> = {
     element: (
       <UnauthorizedLayout>
         <Suspense fallback={<PageSkeleton />}>
-          <h1>ResetPasswordPage</h1>
+          <PageTransition>
+            <h1>ResetPasswordPage</h1>
+          </PageTransition>
         </Suspense>
       </UnauthorizedLayout>
     ),

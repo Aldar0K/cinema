@@ -9,7 +9,7 @@ import {
   preloadMoviesPage,
 } from "@/pages/authorized";
 import { NavigationLink } from "@/shared/types";
-import { PageSkeleton } from "@/shared/ui";
+import { PageSkeleton, PageTransition } from "@/shared/ui";
 
 export enum AdminRoutes {
   MAIN = "main",
@@ -64,7 +64,9 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
     element: (
       <AuthorizedLayout>
         <Suspense fallback={<PageSkeleton />}>
-          <HomePage />
+          <PageTransition>
+            <HomePage />
+          </PageTransition>
         </Suspense>
       </AuthorizedLayout>
     ),
@@ -73,9 +75,11 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
     path: AdminPaths[AdminRoutes.MOVIES],
     element: (
       <AuthorizedLayout>
-        <Suspense fallback={<PageSkeleton />}>
-          <MoviesPage />
-        </Suspense>
+        <PageTransition>
+          <Suspense fallback={<PageSkeleton />}>
+            <MoviesPage />
+          </Suspense>
+        </PageTransition>
       </AuthorizedLayout>
     ),
   },
@@ -84,7 +88,9 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
     element: (
       <AuthorizedLayout>
         <Suspense fallback={<PageSkeleton />}>
-          <h1>SeancesPage</h1>
+          <PageTransition>
+            <h1>SeancesPage</h1>
+          </PageTransition>
         </Suspense>
       </AuthorizedLayout>
     ),
@@ -94,7 +100,9 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
     element: (
       <AuthorizedLayout>
         <Suspense fallback={<PageSkeleton />}>
-          <h1>UsersPage</h1>
+          <PageTransition>
+            <h1>UsersPage</h1>
+          </PageTransition>
         </Suspense>
       </AuthorizedLayout>
     ),
@@ -104,7 +112,9 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
     element: (
       <AuthorizedLayout>
         <Suspense fallback={<PageSkeleton />}>
-          <h1>FinancePage</h1>
+          <PageTransition>
+            <h1>FinancePage</h1>
+          </PageTransition>
         </Suspense>
       </AuthorizedLayout>
     ),
@@ -114,7 +124,9 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
     element: (
       <AuthorizedLayout>
         <Suspense fallback={<PageSkeleton />}>
-          <h1>SettingsPage</h1>
+          <PageTransition>
+            <h1>SettingsPage</h1>
+          </PageTransition>
         </Suspense>
       </AuthorizedLayout>
     ),
@@ -124,7 +136,9 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
     element: (
       <AuthorizedLayout>
         <Suspense fallback={<PageSkeleton />}>
-          <h1>ProfilePage</h1>
+          <PageTransition>
+            <h1>ProfilePage</h1>
+          </PageTransition>
         </Suspense>
       </AuthorizedLayout>
     ),

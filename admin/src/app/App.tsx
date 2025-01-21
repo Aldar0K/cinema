@@ -8,15 +8,15 @@ import { ThemeProvider } from "./providers/theme-provider";
 
 const App = () => {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-      <StoreProvider>
-        <BrowserRouter>
-          <Suspense fallback={<PageSkeleton />}>
+    <Suspense fallback={<PageSkeleton />}>
+      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+        <StoreProvider>
+          <BrowserRouter>
             <AppRouter />
-          </Suspense>
-        </BrowserRouter>
-      </StoreProvider>
-    </ThemeProvider>
+          </BrowserRouter>
+        </StoreProvider>
+      </ThemeProvider>
+    </Suspense>
   );
 };
 
