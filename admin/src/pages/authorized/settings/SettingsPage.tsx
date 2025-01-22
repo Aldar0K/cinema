@@ -1,18 +1,18 @@
 import { FC } from "react";
 
 import { cn } from "@/shared/utils";
-import cls from "./TemplateName.module.scss";
+import cls from "./SettingsPage.module.scss";
 
-const TemplateName: FC = () => {
+const SettingsPage: FC = () => {
   return (
-    <main className={cn(`main`)} data-testid="TemplateName">
+    <main className={cn(`main`)} data-testid="SettingsPage">
       <div className={cn(cls.container)}>
         <div className={cn(cls.content)}>
-          <h1>TemplateName</h1>
+          <h1>SettingsPage</h1>
         </div>
       </div>
     </main>
   );
 };
 
-export default TemplateName;
+export default SettingsPage;
