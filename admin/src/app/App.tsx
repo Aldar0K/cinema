@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import { PageSkeleton } from "@/shared/ui";
 import { AppRouter } from "./providers/app-router";
+import { ErrorBoundary } from "./providers/error-boundary";
 import { StoreProvider } from "./providers/store-provider";
 import { ThemeProvider } from "./providers/theme-provider";
 
@@ -11,9 +12,11 @@ const App = () => {
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <StoreProvider>
         <BrowserRouter>
-          <Suspense fallback={<PageSkeleton />}>
-            <AppRouter />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<PageSkeleton />}>
+              <AppRouter />
+            </Suspense>
+          </ErrorBoundary>
         </BrowserRouter>
       </StoreProvider>
     </ThemeProvider>
