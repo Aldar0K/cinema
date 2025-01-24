@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { ReactNode, Suspense } from "react";
 import { RouteProps } from "react-router-dom";
 
 import { CommonLayout } from "@/layouts/common";
@@ -14,29 +14,21 @@ export const CommonPaths: Record<CommonRoutes, string> = {
   [CommonRoutes.NOT_FOUND]: "*",
 };
 
+const withLayout = (component: ReactNode) => (
+  <CommonLayout>
+    <Suspense fallback={<PageSkeleton />}>
+      <PageTransition>{component}</PageTransition>
+    </Suspense>
+  </CommonLayout>
+);
+
 export const CommonRouteConfig: Record<CommonRoutes, RouteProps> = {
   [CommonRoutes.COOKIES_POLICY]: {
     path: CommonPaths[CommonRoutes.COOKIES_POLICY],
-    element: (
-      <CommonLayout>
-        <Suspense fallback={<PageSkeleton />}>
-          <PageTransition>
-            <h1>CookiesPolicyPage</h1>
-          </PageTransition>
-        </Suspense>
-      </CommonLayout>
-    ),
+    element: withLayout(<h1>CookiesPolicyPage</h1>),
   },
   [CommonRoutes.NOT_FOUND]: {
     path: CommonPaths[CommonRoutes.NOT_FOUND],
-    element: (
-      <CommonLayout>
-        <Suspense fallback={<PageSkeleton />}>
-          <PageTransition>
-            <h1>SomeNotFoundPage</h1>
-          </PageTransition>
-        </Suspense>
-      </CommonLayout>
-    ),
+    element: withLayout(<h1>NotFoundPage</h1>),
   },
 };

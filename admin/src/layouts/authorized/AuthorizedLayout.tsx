@@ -1,16 +1,17 @@
-import { FC, ReactNode } from "react";
+import { type FC, type PropsWithChildren } from "react";
 
 import { Header } from "@/widgets";
 
-type AuthorizedLayoutProps = {
-  children: ReactNode;
+export const AuthorizedLayout: FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <div className="min-h-screen" data-testid="authorized-layout">
+      <Header />
+      <div className="flex">
+        {/* <Sidebar /> */}
+        <main className="flex-1">
+          <div className="mx-auto max-w-7xl px-4 py-8">{children}</div>
+        </main>
+      </div>
+    </div>
+  );
 };
-
-const AuthorizedLayout: FC<AuthorizedLayoutProps> = ({ children }) => (
-  <div className="wrapper" data-testid="AuthorizedLayout">
-    <Header />
-    {children}
-  </div>
-);
-
-export default AuthorizedLayout;

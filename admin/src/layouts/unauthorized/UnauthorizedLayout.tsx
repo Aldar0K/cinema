@@ -1,14 +1,12 @@
-import { FC, ReactNode } from "react";
+import type { FC, PropsWithChildren } from "react";
 
-type UnauthorizedLayoutProps = {
-  children: ReactNode;
+export const UnauthorizedLayout: FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <div
+      className="min-h-screen flex items-center justify-center"
+      data-testid="unauthorized-layout"
+    >
+      <div className="w-full max-w-7xl px-4">{children}</div>
+    </div>
+  );
 };
-
-const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = ({ children }) => (
-  <div className="wrapper" data-testid="UnauthorizedLayout">
-    <h2>UnauthorizedLayout</h2>
-    {children}
-  </div>
-);
-
-export default UnauthorizedLayout;

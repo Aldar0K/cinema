@@ -1,1 +1,1 @@
-export { default as AuthorizedLayout } from "./AuthorizedLayout";
+export { AuthorizedLayout } from "./AuthorizedLayout";

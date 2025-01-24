@@ -1,14 +1,11 @@
-import { FC, ReactNode } from "react";
+import type { FC, PropsWithChildren } from "react";
 
-type CommonLayoutProps = {
-  children: ReactNode;
+export const CommonLayout: FC<PropsWithChildren> = ({ children }) => {
+  return (
+    <div className="min-h-screen" data-testid="common-layout">
+      <main>
+        <div className="mx-auto max-w-7xl px-4 py-8">{children}</div>
+      </main>
+    </div>
+  );
 };
-
-const CommonLayout: FC<CommonLayoutProps> = ({ children }) => (
-  <div className="wrapper" data-testid="CommonLayout">
-    <h2>CommonLayout</h2>
-    {children}
-  </div>
-);
-
-export default CommonLayout;

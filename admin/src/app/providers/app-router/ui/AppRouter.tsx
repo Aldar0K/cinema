@@ -7,7 +7,7 @@ import { AdminRoutes } from "./AdminRoutes";
 import { CommonRoutes } from "./CommonRoutes";
 import { UnauthorizedRoutes } from "./UnauthorizedRoutes";
 
-const AppRouter: FC = () => {
+export const AppRouter: FC = () => {
   const isAuth = useAppSelector(getIsAuth);
 
   const UserRoutes = useMemo(() => {
@@ -25,5 +25,3 @@ const AppRouter: FC = () => {
     </Routes>
   );
 };
-
-export default AppRouter;

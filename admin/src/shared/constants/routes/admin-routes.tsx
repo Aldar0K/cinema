@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { ReactNode, Suspense } from "react";
 import { Navigate, RouteProps } from "react-router-dom";
 
 import { AuthorizedLayout } from "@/layouts/authorized";
@@ -58,90 +58,42 @@ export const adminNavigationLinks: NavigationLink[] = [
   },
 ];
 
+const withLayout = (component: ReactNode) => (
+  <AuthorizedLayout>
+    <Suspense fallback={<PageSkeleton />}>
+      <PageTransition>{component}</PageTransition>
+    </Suspense>
+  </AuthorizedLayout>
+);
+
 export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
   [AdminRoutes.MAIN]: {
     path: AdminPaths[AdminRoutes.MAIN],
-    element: (
-      <AuthorizedLayout>
-        <Suspense fallback={<PageSkeleton />}>
-          <PageTransition>
-            <HomePage />
-          </PageTransition>
-        </Suspense>
-      </AuthorizedLayout>
-    ),
+    element: withLayout(<HomePage />),
   },
   [AdminRoutes.MOVIES]: {
     path: AdminPaths[AdminRoutes.MOVIES],
-    element: (
-      <AuthorizedLayout>
-        <PageTransition>
-          <Suspense fallback={<PageSkeleton />}>
-            <MoviesPage />
-          </Suspense>
-        </PageTransition>
-      </AuthorizedLayout>
-    ),
+    element: withLayout(<MoviesPage />),
   },
   [AdminRoutes.SEANCES]: {
     path: AdminPaths[AdminRoutes.SEANCES],
-    element: (
-      <AuthorizedLayout>
-        <Suspense fallback={<PageSkeleton />}>
-          <PageTransition>
-            <h1>SeancesPage</h1>
-          </PageTransition>
-        </Suspense>
-      </AuthorizedLayout>
-    ),
+    element: withLayout(<h1>SeancesPage</h1>),
   },
   [AdminRoutes.USERS]: {
     path: AdminPaths[AdminRoutes.USERS],
-    element: (
-      <AuthorizedLayout>
-        <Suspense fallback={<PageSkeleton />}>
-          <PageTransition>
-            <h1>UsersPage</h1>
-          </PageTransition>
-        </Suspense>
-      </AuthorizedLayout>
-    ),
+    element: withLayout(<h1>UsersPage</h1>),
   },
   [AdminRoutes.FINANCE]: {
     path: AdminPaths[AdminRoutes.FINANCE],
-    element: (
-      <AuthorizedLayout>
-        <Suspense fallback={<PageSkeleton />}>
-          <PageTransition>
-            <h1>FinancePage</h1>
-          </PageTransition>
-        </Suspense>
-      </AuthorizedLayout>
-    ),
+    element: withLayout(<h1>FinancePage</h1>),
   },
   [AdminRoutes.SETTINGS]: {
     path: AdminPaths[AdminRoutes.SETTINGS],
-    element: (
-      <AuthorizedLayout>
-        <Suspense fallback={<PageSkeleton />}>
-          <PageTransition>
-            <h1>SettingsPage</h1>
-          </PageTransition>
-        </Suspense>
-      </AuthorizedLayout>
-    ),
+    element: withLayout(<h1>SettingsPage</h1>),
   },
   [AdminRoutes.PROFILE]: {
     path: AdminPaths[AdminRoutes.PROFILE],
-    element: (
-      <AuthorizedLayout>
-        <Suspense fallback={<PageSkeleton />}>
-          <PageTransition>
-            <h1>ProfilePage</h1>
-          </PageTransition>
-        </Suspense>
-      </AuthorizedLayout>
-    ),
+    element: withLayout(<h1>ProfilePage</h1>),
   },
   [AdminRoutes.NOT_FOUND]: {
     path: AdminPaths[AdminRoutes.NOT_FOUND],

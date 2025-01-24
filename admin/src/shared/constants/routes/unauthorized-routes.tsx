@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { ReactNode, Suspense } from "react";
 import { Navigate, RouteProps } from "react-router-dom";
 
 import { UnauthorizedLayout } from "@/layouts/unauthorized";
@@ -17,30 +17,22 @@ export const UnauthorizedPaths: Record<UnauthorizedRoutes, string> = {
   [UnauthorizedRoutes.NOT_FOUND]: "*",
 };
 
+const withLayout = (component: ReactNode) => (
+  <UnauthorizedLayout>
+    <Suspense fallback={<PageSkeleton />}>
+      <PageTransition>{component}</PageTransition>
+    </Suspense>
+  </UnauthorizedLayout>
+);
+
 export const UnauthorizedRouteConfig: Record<UnauthorizedRoutes, RouteProps> = {
   [UnauthorizedRoutes.SIGNIN]: {
     path: UnauthorizedPaths[UnauthorizedRoutes.SIGNIN],
-    element: (
-      <UnauthorizedLayout>
-        <Suspense fallback={<PageSkeleton />}>
-          <PageTransition>
-            <SigninPage />
-          </PageTransition>
-        </Suspense>
-      </UnauthorizedLayout>
-    ),
+    element: withLayout(<SigninPage />),
   },
   [UnauthorizedRoutes.RESET_PASSWORD]: {
     path: UnauthorizedPaths[UnauthorizedRoutes.RESET_PASSWORD],
-    element: (
-      <UnauthorizedLayout>
-        <Suspense fallback={<PageSkeleton />}>
-          <PageTransition>
-            <h1>ResetPasswordPage</h1>
-          </PageTransition>
-        </Suspense>
-      </UnauthorizedLayout>
-    ),
+    element: withLayout(<h1>ResetPasswordPage</h1>),
   },
   [UnauthorizedRoutes.NOT_FOUND]: {
     path: UnauthorizedPaths[UnauthorizedRoutes.NOT_FOUND],

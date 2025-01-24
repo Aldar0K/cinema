@@ -1,8 +1,8 @@
 import { Route } from "react-router-dom";
 
-import { CommonRouteConfig } from "@/shared/constants/routes";
+import { AdminRouteConfig } from "@/shared/constants";
 
-export const CommonRoutes = Object.values(CommonRouteConfig).map(
+export const AdminRoutes = Object.values(AdminRouteConfig).map(
   ({ path, Component, element }) => (
     <Route key={path} path={path} Component={Component} element={element} />
   ),
