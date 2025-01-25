@@ -13,7 +13,7 @@ const Header: FC<HeaderProps> = (props) => {
   return (
     <div
       className={cn(
-        "w-full px-4",
+        "min-h-[72px] w-full px-4",
         "bg-background",
         "flex justify-between items-center gap-[16px]",
         className,

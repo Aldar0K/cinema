@@ -32,7 +32,6 @@ export const authApi = baseApi.injectEndpoints({
       onQueryStarted: (_, api) => {
         api.queryFulfilled
           .then((response) => {
-            console.log("response", response);
             api.dispatch(authActions.setUser({ email: response.data.email }));
           })
           .catch((error) => {

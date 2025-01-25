@@ -1,11 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FC, useState } from "react";
+import { AlertCircle } from "lucide-react";
+import { FC } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { useLoginMutation } from "@/entities/auth";
 import {
+  Alert,
   Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
   Form,
   FormControl,
   FormField,
@@ -15,23 +20,17 @@ import {
   Input,
 } from "@/shared/ui";
 import { cn } from "@/shared/utils";
+import { formSchema, type FormSchema } from "../../model/schema";
 
-const formSchema = z.object({
-  email: z.string().min(2).max(50),
-  password: z.string().min(2).max(50),
-});
-
-type SignInFormProps = {
+export type SignInFormProps = {
   className?: string;
 };
 
-export const SignInForm: FC<SignInFormProps> = (props) => {
+const SignInForm: FC<SignInFormProps> = (props) => {
   const { className } = props;
-  // const dispatch = useAppDispatch();
-  const [errorMessage, setErrorMessage] = useState<string>("");
   const [loginMutate, { isLoading: isLoadingLogin }] = useLoginMutation();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
@@ -39,67 +38,82 @@ export const SignInForm: FC<SignInFormProps> = (props) => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setErrorMessage("");
-
+  const onSubmit = async (values: FormSchema) => {
     const response = await loginMutate({
       email: values.email,
       password: values.password,
     });
 
-    // try {
-    //   const response = await axiosClient
-    //     .post("/auth/sign-in", values, { withCredentials: true })
-    //     .finally(() => {
-    //       setIsLoading(false);
-    //     });
-
-    // dispatch(authActions.setUser({ email: response.data.email }));
-    //   setSuccess(true);
-    // } catch (error) {
-    //   setErrorMessage((error as any).response.data.message);
-    // }
+    if ("error" in response) {
+      form.setError("root", {
+        message: "Invalid credentials",
+      });
+    }
   };
 
+  const rootError = form.formState.errors.root?.message;
+
   return (
-    <div className={cn("", {}, [className])} data-testid="SignInForm">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Email" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+    <Card className={cn("w-[350px]", className)} data-testid="sign-in-form">
+      <CardHeader>
+        <CardTitle>Sign In</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your email"
+                      type="email"
+                      disabled={isLoadingLogin}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your password"
+                      type="password"
+                      disabled={isLoadingLogin}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {rootError && (
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <p className="text-sm">{rootError}</p>
+              </Alert>
             )}
-          />
 
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input placeholder="Password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {errorMessage && <p>{errorMessage}</p>}
-
-          <Button type="submit" disabled={isLoadingLogin}>
-            Submit
-          </Button>
-        </form>
-      </Form>
-    </div>
+            <Button type="submit" className="w-full" disabled={isLoadingLogin}>
+              {isLoadingLogin ? "Signing in..." : "Sign In"}
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 };
+
+export default SignInForm;
