@@ -1,4 +1,1 @@
-export {
-  MoviesPageLazy as MoviesPage,
-  preloadMoviesPage,
-} from "./MoviesPage.lazy";
+export { MoviesPage } from "./ui";
