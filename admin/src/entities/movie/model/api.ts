@@ -34,28 +34,27 @@ export const userApi = baseApi
       }),
 
       createMovie: builder.mutation<CreateMovieResponse, CreateMovieDto>({
-        query: (data) => ({
+        query: ({ body }) => ({
           url: "movies",
           method: "POST",
-          body: data,
+          body,
         }),
         invalidatesTags: ["movies"],
       }),
 
       updateMovie: builder.mutation<UpdateMovieResponse, UpdateMovieDto>({
-        query: (data) => ({
-          url: "movies",
-          method: "PUT",
-          body: data,
+        query: ({ id, body }) => ({
+          url: `movies/${id}`,
+          method: "PATCH",
+          body,
         }),
         invalidatesTags: ["movies", "movie"],
       }),
 
       deleteMovie: builder.mutation<DeleteMovieResponse, DeleteMovieDto>({
-        query: (data) => ({
-          url: "movies",
+        query: ({ id }) => ({
+          url: `movies/${id}`,
           method: "DELETE",
-          body: data,
         }),
         invalidatesTags: ["movies", "movie"],
       }),

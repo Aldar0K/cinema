@@ -1,6 +1,8 @@
 import { FC } from "react";
 
 import type { Movie } from "@/entities/movie";
+import { DeleteMovieButton } from "@/features/movie/delete-movie";
+import { EditMovieButton } from "@/features/movie/edit-movie";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 
 type MovieCardProps = {
@@ -10,7 +12,7 @@ type MovieCardProps = {
 };
 
 export const MovieCard: FC<MovieCardProps> = (props) => {
-  const { movie, editable, deleteable } = props;
+  const { movie, editable = true, deleteable = true } = props;
 
   return (
     <Card>
@@ -23,8 +25,8 @@ export const MovieCard: FC<MovieCardProps> = (props) => {
 
         {(editable || deleteable) && (
           <div className="flex justify-end gap-2">
-            {/* {editable && <EditMovieButton movie={movie} />} */}
-            {/* {deleteable && <DeleteMovieButton movie={movie} />} */}
+            {editable && <EditMovieButton movie={movie} />}
+            {deleteable && <DeleteMovieButton movie={movie} />}
           </div>
         )}
       </CardContent>

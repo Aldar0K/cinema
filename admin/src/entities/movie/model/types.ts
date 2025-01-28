@@ -18,6 +18,7 @@ export type CreateMovieDto = {
 export type CreateMovieResponse = Movie;
 
 export type UpdateMovieDto = {
+  id: number;
   body: {
     name?: string;
   };
@@ -26,9 +27,7 @@ export type UpdateMovieDto = {
 export type UpdateMovieResponse = Movie;
 
 export type DeleteMovieDto = {
-  body: {
-    id: string;
-  };
+  id: number;
 };
 
 export type DeleteMovieResponse = Movie;
