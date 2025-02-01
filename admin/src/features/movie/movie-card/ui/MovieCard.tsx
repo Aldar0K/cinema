@@ -5,13 +5,13 @@ import { DeleteMovieButton } from "@/features/movie/delete-movie";
 import { EditMovieButton } from "@/features/movie/edit-movie";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 
-type MovieCardProps = {
+export type MovieCardProps = {
   movie: Movie;
   editable?: boolean;
   deleteable?: boolean;
 };
 
-export const MovieCard: FC<MovieCardProps> = (props) => {
+const MovieCard: FC<MovieCardProps> = (props) => {
   const { movie, editable = true, deleteable = true } = props;
 
   return (
@@ -33,3 +33,5 @@ export const MovieCard: FC<MovieCardProps> = (props) => {
     </Card>
   );
 };
+
+export default MovieCard;

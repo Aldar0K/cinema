@@ -1,6 +1,6 @@
-import type { FC } from "react";
+import { type FC } from "react";
 
-import { MovieList } from "@/features/movie";
+import { CreateMovieButton, MovieList } from "@/features/movie";
 import { cn } from "@/shared/utils";
 
 const MoviesPage: FC = () => {
@@ -14,7 +14,7 @@ const MoviesPage: FC = () => {
               Manage your movie catalog here
             </p>
           </div>
-          {/* <MovieActions /> */}
+          <CreateMovieButton />
         </div>
         <MovieList />
       </div>

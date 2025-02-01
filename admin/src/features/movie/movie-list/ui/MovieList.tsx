@@ -9,7 +9,7 @@ type MovieListProps = {
   className?: string;
 };
 
-export const MovieList: FC<MovieListProps> = (props) => {
+const MovieList: FC<MovieListProps> = (props) => {
   const { className } = props;
   const { data: movies, isLoading } = useGetMoviesQuery();
 
@@ -36,3 +36,5 @@ export const MovieList: FC<MovieListProps> = (props) => {
     </div>
   );
 };
+
+export default MovieList;

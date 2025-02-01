@@ -1,1 +1,1 @@
-export { MovieCard } from "./ui/MovieCard";
+export { MovieCard } from "./ui/MovieCard.lazy";
