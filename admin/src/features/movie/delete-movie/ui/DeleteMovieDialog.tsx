@@ -8,7 +8,6 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogPortal,
   DialogTitle,
 } from "@/shared/ui";
 
@@ -33,29 +32,27 @@ export const DeleteMovieDialog: FC<DeleteMovieDialogProps> = (props) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogPortal>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Delete Movie</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete this movie? This action cannot be
-              undone.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex justify-end gap-4">
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={handleDelete}
-              disabled={isLoading}
-            >
-              {isLoading ? "Deleting..." : "Delete"}
-            </Button>
-          </div>
-        </DialogContent>
-      </DialogPortal>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete Movie</DialogTitle>
+          <DialogDescription>
+            Are you sure you want to delete this movie? This action cannot be
+            undone.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex justify-end gap-4">
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
+          <Button
+            variant="destructive"
+            onClick={handleDelete}
+            disabled={isLoading}
+          >
+            {isLoading ? "Deleting..." : "Delete"}
+          </Button>
+        </div>
+      </DialogContent>
     </Dialog>
   );
 };

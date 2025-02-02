@@ -14,6 +14,7 @@ import { PageSkeleton, PageTransition } from "@/shared/ui";
 export enum AdminRoutes {
   MAIN = "main",
   MOVIES = "movies",
+  MOVIE = "movie",
   SEANCES = "seances",
   USERS = "users",
   FINANCE = "finance",
@@ -25,6 +26,7 @@ export enum AdminRoutes {
 export const AdminPaths: Record<AdminRoutes, string> = {
   [AdminRoutes.MAIN]: "/",
   [AdminRoutes.MOVIES]: "/movies",
+  [AdminRoutes.MOVIE]: "/movies/:id",
   [AdminRoutes.SEANCES]: "/seances",
   [AdminRoutes.USERS]: "/users",
   [AdminRoutes.FINANCE]: "/finance",
@@ -74,6 +76,10 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
   [AdminRoutes.MOVIES]: {
     path: AdminPaths[AdminRoutes.MOVIES],
     element: withLayout(<MoviesPage />),
+  },
+  [AdminRoutes.MOVIE]: {
+    path: AdminPaths[AdminRoutes.MOVIE],
+    element: withLayout(<h1>MoviePage</h1>),
   },
   [AdminRoutes.SEANCES]: {
     path: AdminPaths[AdminRoutes.SEANCES],

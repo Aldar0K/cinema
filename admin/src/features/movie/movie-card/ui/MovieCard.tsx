@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import type { Movie } from "@/entities/movie";
 import { DeleteMovieButton } from "@/features/movie/delete-movie";
 import { EditMovieButton } from "@/features/movie/edit-movie";
+import { buildMoviePath } from "@/shared/constants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 import { cn } from "@/shared/utils";
 
@@ -19,7 +20,7 @@ const MovieCard: FC<MovieCardProps> = (props) => {
   const navigate = useNavigate();
 
   const onClick = () => {
-    navigate(`/movies/${movie.id}`);
+    navigate(buildMoviePath(movie.id));
   };
 
   return (
