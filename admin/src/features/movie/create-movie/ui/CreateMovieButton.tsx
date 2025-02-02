@@ -20,7 +20,7 @@ const CreateMovieButton: FC<CreateMovieButtonProps> = (props) => {
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <CreateMovieDialog onSuccess={() => setOpen(false)} />
+        <CreateMovieDialog open={open} setOpen={setOpen} />
       </Dialog>
     </>
   );

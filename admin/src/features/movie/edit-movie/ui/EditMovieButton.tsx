@@ -19,11 +19,15 @@ export const EditMovieButton: FC<EditMovieButtonProps> = (props) => {
       <Button
         variant="secondary"
         size="icon"
-        onClick={() => setOpen(true)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen(true);
+        }}
         className={className}
       >
         <Pencil className="h-4 w-4" />
       </Button>
+
       <EditMovieDialog movie={movie} open={open} setOpen={setOpen} />
     </>
   );

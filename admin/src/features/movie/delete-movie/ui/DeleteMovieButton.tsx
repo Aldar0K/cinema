@@ -2,7 +2,7 @@ import { Trash2 } from "lucide-react";
 import { type FC, useState } from "react";
 
 import { Movie } from "@/entities/movie";
-import { Button, Dialog } from "@/shared/ui";
+import { Button } from "@/shared/ui";
 import { DeleteMovieDialog } from "./DeleteMovieDialog";
 
 type DeleteMovieButtonProps = {
@@ -19,15 +19,16 @@ export const DeleteMovieButton: FC<DeleteMovieButtonProps> = (props) => {
       <Button
         variant="destructive"
         size="icon"
-        onClick={() => setOpen(true)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen(true);
+        }}
         className={className}
       >
         <Trash2 className="h-4 w-4" />
       </Button>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DeleteMovieDialog movie={movie} onSuccess={() => setOpen(false)} />
-      </Dialog>
+      <DeleteMovieDialog movie={movie} open={open} setOpen={setOpen} />
     </>
   );
 };

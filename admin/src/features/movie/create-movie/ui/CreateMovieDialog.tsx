@@ -1,7 +1,9 @@
 import {
+  Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogPortal,
   DialogTitle,
 } from "@/shared/ui";
 import type { FC } from "react";
@@ -9,19 +11,26 @@ import type { FC } from "react";
 import { CreateMovieForm } from "./CreateMovieForm";
 
 type CreateMovieDialogProps = {
-  onSuccess?: () => void;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 };
 
 export const CreateMovieDialog: FC<CreateMovieDialogProps> = (props) => {
-  const { onSuccess } = props;
+  const { open, setOpen } = props;
 
   return (
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Create Movie</DialogTitle>
-        <DialogDescription>Add a new movie to your catalog.</DialogDescription>
-      </DialogHeader>
-      <CreateMovieForm onSuccess={onSuccess} />
-    </DialogContent>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogPortal>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create Movie</DialogTitle>
+            <DialogDescription>
+              Add a new movie to your catalog.
+            </DialogDescription>
+          </DialogHeader>
+          <CreateMovieForm onSuccess={() => setOpen(false)} />
+        </DialogContent>
+      </DialogPortal>
+    </Dialog>
   );
 };

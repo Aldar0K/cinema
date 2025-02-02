@@ -9,6 +9,7 @@ export * from "./label";
 export * from "./loader";
 export * from "./page-skeleton";
 export * from "./page-transition";
+export * from "./portal";
 export * from "./route-loader";
 export * from "./skeleton";
 export * from "./toast";

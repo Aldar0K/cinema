@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogPortal,
   DialogTitle,
 } from "@/shared/ui";
 import { EditMovieForm } from "./EditMovieForm";
@@ -21,15 +22,17 @@ export const EditMovieDialog: FC<EditMovieDialogProps> = (props) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Edit Movie</DialogTitle>
-          <DialogDescription>
-            Make changes to the movie details below.
-          </DialogDescription>
-        </DialogHeader>
-        <EditMovieForm movie={movie} onSuccess={() => setOpen(false)} />
-      </DialogContent>
+      <DialogPortal>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Movie</DialogTitle>
+            <DialogDescription>
+              Make changes to the movie details below.
+            </DialogDescription>
+          </DialogHeader>
+          <EditMovieForm movie={movie} onSuccess={() => setOpen(false)} />
+        </DialogContent>
+      </DialogPortal>
     </Dialog>
   );
 };
