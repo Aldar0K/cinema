@@ -10,6 +10,7 @@ import {
 } from "@/pages/authorized";
 import { NavigationLink } from "@/shared/types";
 import { PageSkeleton, PageTransition } from "@/shared/ui";
+import { MoviePage } from "@/pages/authorized/movie";
 
 export enum AdminRoutes {
   MAIN = "main",
@@ -79,7 +80,7 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
   },
   [AdminRoutes.MOVIE]: {
     path: AdminPaths[AdminRoutes.MOVIE],
-    element: withLayout(<h1>MoviePage</h1>),
+    element: withLayout(<MoviePage />),
   },
   [AdminRoutes.SEANCES]: {
     path: AdminPaths[AdminRoutes.SEANCES],

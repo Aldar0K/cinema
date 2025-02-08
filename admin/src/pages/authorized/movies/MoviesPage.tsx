@@ -5,7 +5,7 @@ import { cn } from "@/shared/utils";
 
 const MoviesPage: FC = () => {
   return (
-    <main className={cn("", {}, [])} data-testid="MoviesPage">
+    <main className={cn("main")} data-testid="MoviesPage">
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
