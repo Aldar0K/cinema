@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { useGetMovieQuery } from "@/entities/movie";
 import { EditMovieButton } from "@/features/movie/edit-movie";
+import { SeanceList } from "@/features/seance/seance-list";
 import { Alert, AlertDescription } from "@/shared/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
 import { Skeleton } from "@/shared/ui/skeleton";
@@ -57,7 +58,7 @@ const MoviePage: FC = () => {
         </div>
         <EditMovieButton movie={movie} size="default" />
       </div>
-      {/* <SeanceList /> */}
+      <SeanceList seances={movie.seances} />
     </main>
   );
 };

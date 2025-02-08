@@ -18,7 +18,14 @@ export class MoviesService {
   findOne(id: number) {
     return this.prisma.movie.findUnique({
       where: { id },
-      include: { seances: true },
+      include: {
+        seances: {
+          include: {
+            seats: true,
+            movie: true,
+          },
+        },
+      },
     });
   }
 

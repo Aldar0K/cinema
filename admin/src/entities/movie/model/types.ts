@@ -1,8 +1,9 @@
+import { Seance } from "@/entities/seance";
+
 export type Movie = {
   id: number;
   name: string;
-  // seances: Seance[];
-  seances?: string[];
+  seances?: Seance[];
 };
 
 export type GetMoviesResponse = Movie[];
