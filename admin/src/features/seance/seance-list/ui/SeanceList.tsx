@@ -1,6 +1,7 @@
 import type { FC } from "react";
 
-import { Seance, SeanceCard } from "@/entities/seance";
+import { Seance } from "@/entities/seance";
+import { SeanceCard } from "@/features/seance/seance-card";
 import { cn } from "@/shared/utils";
 
 export type SeanceListProps = {
