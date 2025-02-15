@@ -1,9 +1,11 @@
-import type { Seance } from "@/entities/seance";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/shared/ui";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { Calendar, Clock } from "lucide-react";
 import type { FC } from "react";
+
+import type { Seance } from "@/entities/seance";
+import { SeanceSeats } from "@/features/seance/seance-seats";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/shared/ui";
 
 export type SeanceModalProps = {
   seance: Seance;
@@ -18,7 +20,7 @@ const SeanceModal: FC<SeanceModalProps> = ({ seance, open, onOpenChange }) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="min-w-[400px]">
         <DialogHeader>
           <DialogTitle>{seance.movie.name}</DialogTitle>
         </DialogHeader>
@@ -32,6 +34,7 @@ const SeanceModal: FC<SeanceModalProps> = ({ seance, open, onOpenChange }) => {
             <span>{formattedTime}</span>
           </div>
         </div>
+        <SeanceSeats seats={seance.seats} />
       </DialogContent>
     </Dialog>
   );
