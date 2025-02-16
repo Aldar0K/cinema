@@ -72,7 +72,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "generate-react-cli": "^8.4.6",
     "postcss": "^8.4.38",
-    "sass": "^1.77.8",
+    "sass": "^1.85.0",
     "stylelint": "^16.6.1",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard-scss": "^13.1.0",

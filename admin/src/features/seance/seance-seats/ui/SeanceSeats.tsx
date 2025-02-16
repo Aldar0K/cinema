@@ -53,7 +53,7 @@ const SeanceSeats: FC<SeanceSeatsProps> = ({ seats, className }) => {
       >
         {rows.map((row) => (
           <div key={row} className="flex items-center gap-4">
-            <div className="w-8 text-sm text-muted-foreground">Ряд {row}</div>
+            <div className="text-sm text-muted-foreground">Ряд {row}</div>
             <div className="flex gap-2">
               {seatsByRow[row].map((seat) => (
                 <SeatCard
