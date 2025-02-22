@@ -1,6 +1,5 @@
 import { type FC, type PropsWithChildren } from "react";
 
-import { Toaster } from "@/shared/ui";
 import { Header } from "@/widgets";
 
 export const AuthorizedLayout: FC<PropsWithChildren> = ({ children }) => {
@@ -13,7 +12,6 @@ export const AuthorizedLayout: FC<PropsWithChildren> = ({ children }) => {
           <div className="mx-auto max-w-7xl px-4 py-8">{children}</div>
         </main>
       </div>
-      <Toaster />
     </div>
   );
 };

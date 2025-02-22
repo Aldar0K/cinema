@@ -1,12 +1,9 @@
-"use client";
-
-// Inspired by react-hot-toast library
 import * as React from "react";
 
-import type { ToastActionElement, ToastProps } from "@/shared/ui/toast";
+import type { ToastActionElement, ToastProps } from "@/shared/ui";
 
-const TOAST_LIMIT = 1;
-const TOAST_REMOVE_DELAY = 1000000;
+const TOAST_LIMIT = 3;
+const TOAST_REMOVE_DELAY = 3000; // 3 seconds
 
 type ToasterToast = ToastProps & {
   id: string;
@@ -25,7 +22,7 @@ const actionTypes = {
 let count = 0;
 
 function genId() {
-  count = (count + 1) % Number.MAX_SAFE_INTEGER;
+  count = (count + 1) % Number.MAX_VALUE;
   return count.toString();
 }
 
@@ -156,13 +153,16 @@ function toast({ ...props }: Toast) {
       id,
       open: true,
       onOpenChange: (open) => {
-        if (!open) dismiss();
+        if (!open) {
+          dismiss();
+        }
+        props.onOpenChange?.(open);
       },
     },
   });
 
   return {
-    id: id,
+    id,
     dismiss,
     update,
   };
@@ -179,7 +179,7 @@ function useToast() {
         listeners.splice(index, 1);
       }
     };
-  }, [state]);
+  }, []);
 
   return {
     ...state,

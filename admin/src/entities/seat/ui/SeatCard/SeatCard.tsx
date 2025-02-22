@@ -16,27 +16,31 @@ const SeatCard: FC<SeatCardProps> = ({
   className,
   onClick,
 }) => {
-  const isOccupied = Boolean(seat.userId);
+  const isOccupied = !!seat.userId;
+  const isReserved = !seat.userId && seat.version;
 
   return (
-    <div
+    <button
+      type="button"
       onClick={() => !isOccupied && onClick?.(seat)}
       className={cn(
-        "flex h-8 w-8 items-center justify-center rounded-md text-sm transition-colors",
-        isOccupied && "bg-muted text-muted-foreground cursor-not-allowed",
-        !isOccupied &&
-          !isSelected &&
-          "bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer",
-        isSelected &&
-          "bg-secondary text-secondary-foreground ring-2 ring-primary cursor-pointer",
+        "flex h-10 w-10 items-center justify-center rounded-md text-sm transition-colors",
+        {
+          "bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer":
+            !isOccupied && !isReserved && !isSelected,
+          "bg-muted text-muted-foreground cursor-not-allowed": isOccupied,
+          "bg-muted text-accent-foreground cursor-not-allowed": isReserved,
+          "bg-secondary text-secondary-foreground ring-2 ring-primary cursor-pointer":
+            isSelected,
+        },
         className,
       )}
       role="button"
-      aria-label={`Место ${seat.place}, ${isOccupied ? "занято" : isSelected ? "выбрано" : "свободно"}`}
+      aria-label={`Место ${seat.place}, ${isOccupied ? "занято" : isReserved ? "зарезервировано" : isSelected ? "выбрано" : "свободно"}`}
       aria-pressed={isSelected}
     >
       {seat.place}
-    </div>
+    </button>
   );
 };
 

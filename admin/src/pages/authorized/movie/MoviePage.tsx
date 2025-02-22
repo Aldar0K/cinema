@@ -1,5 +1,5 @@
 import { Film } from "lucide-react";
-import type { FC } from "react";
+import { type FC } from "react";
 import { useParams } from "react-router-dom";
 
 import { useGetMovieQuery } from "@/entities/movie";
@@ -56,6 +56,7 @@ const MoviePage: FC = () => {
             </p>
           </div>
         </div>
+        {/* <AddSeanceButton movie={movie} /> */}
         <EditMovieButton movie={movie} size="default" />
       </div>
       <SeanceList seances={movie.seances} />

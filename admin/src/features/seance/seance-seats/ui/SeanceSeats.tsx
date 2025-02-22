@@ -2,13 +2,14 @@ import { MoreVertical } from "lucide-react";
 import { type FC, useState } from "react";
 
 import { Seat, SeatCard } from "@/entities/seat";
+import { ReserveSeatButton } from "@/features/seat/reserve-seat";
+import { ResetSeatButton } from "@/features/seat/reset-seat/ui/ResetSeatButton";
 import {
   Accordion,
   AccordionItem,
   Button,
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui";
 import { cn } from "@/shared/utils";
@@ -68,6 +69,7 @@ const SeanceSeats: FC<SeanceSeatsProps> = ({ seats, className }) => {
         ))}
       </div>
 
+      {/* separate component */}
       {selectedSeat && (
         <Accordion type="single" collapsible defaultValue="selected-seat">
           <AccordionItem value="selected-seat" className="border-none">
@@ -90,17 +92,16 @@ const SeanceSeats: FC<SeanceSeatsProps> = ({ seats, className }) => {
                       </span>
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => setSelectedSeat(null)}>
-                      Забронировать место
-                    </DropdownMenuItem>
-                    {selectedSeat.version > 0 && (
-                      <DropdownMenuItem
-                        onClick={() => setSelectedSeat(null)}
-                        className="text-destructive"
-                      >
-                        Отменить бронь
-                      </DropdownMenuItem>
+                  <DropdownMenuContent align="end" className="w-[200px]">
+                    <ReserveSeatButton
+                      seat={selectedSeat}
+                      onSuccess={() => setSelectedSeat(null)}
+                    />
+                    {!!selectedSeat.version && (
+                      <ResetSeatButton
+                        seat={selectedSeat}
+                        onSuccess={() => setSelectedSeat(null)}
+                      />
                     )}
                   </DropdownMenuContent>
                 </DropdownMenu>

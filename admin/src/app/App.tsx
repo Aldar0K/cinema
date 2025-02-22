@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 
-import { PageSkeleton } from "@/shared/ui";
+import { PageSkeleton, Toaster } from "@/shared/ui";
 import { AppRouter } from "./providers/app-router";
 import { ErrorBoundary } from "./providers/error-boundary";
 import { StoreProvider } from "./providers/store-provider";
@@ -16,6 +16,7 @@ const App = () => {
             <Suspense fallback={<PageSkeleton />}>
               <AppRouter />
             </Suspense>
+            <Toaster />
           </ErrorBoundary>
         </BrowserRouter>
       </StoreProvider>

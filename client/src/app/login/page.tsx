@@ -1,5 +1,3 @@
-"use client";
-
 import { authenticate } from "@/api/server-actions/authenticate";
 import { SyntheticEvent } from "react";
 import { useFormState, useFormStatus } from "react-dom";
