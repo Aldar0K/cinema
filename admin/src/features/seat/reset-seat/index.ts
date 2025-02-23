@@ -1,1 +1,1 @@
-export { CancelSeatButton } from "./ui/ResetSeatButton";
+export { ResetSeatButton } from "./ui/ResetSeatButton";

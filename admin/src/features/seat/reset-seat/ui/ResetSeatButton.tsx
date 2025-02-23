@@ -1,5 +1,6 @@
-import { Seat } from "@/entities/seat";
+import { Seat, useUnreserveSeatMutation } from "@/entities/seat";
 import { Button } from "@/shared/ui";
+import { notify } from "@/shared/utils";
 import type { FC } from "react";
 
 type ResetSeatButtonProps = {
@@ -8,20 +9,28 @@ type ResetSeatButtonProps = {
   className?: string;
 };
 
-export const ResetSeatButton: FC<ResetSeatButtonProps> = ({ onSuccess }) => {
-  const onCancel = async () => {
-    try {
-      // TODO: Add API call
-      onSuccess?.();
-    } catch (error) {
-      // Handle error
+export const ResetSeatButton: FC<ResetSeatButtonProps> = ({
+  seat: { id: seatId },
+  onSuccess,
+}) => {
+  const [unreserveSeat, { isLoading }] = useUnreserveSeatMutation();
+
+  const onUnreserve = async () => {
+    const response = await unreserveSeat({ seatId });
+
+    if ("error" in response) {
+      return;
     }
+
+    notify.success("Бронь отменена");
+    onSuccess?.();
   };
 
   return (
     <Button
       variant="destructive"
-      onClick={onCancel}
+      onClick={onUnreserve}
+      disabled={isLoading}
       className="w-full justify-start"
     >
       Отменить бронь

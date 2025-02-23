@@ -1,17 +1,7 @@
-import { MoreVertical } from "lucide-react";
 import { type FC, useState } from "react";
 
 import { Seat, SeatCard } from "@/entities/seat";
-import { ReserveSeatButton } from "@/features/seat/reserve-seat";
-import { ResetSeatButton } from "@/features/seat/reset-seat/ui/ResetSeatButton";
-import {
-  Accordion,
-  AccordionItem,
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/shared/ui";
+import { SelectedSeatCard } from "@/features/seat/selected-seat-card";
 import { cn } from "@/shared/utils";
 
 export type SeanceSeatsProps = {
@@ -69,47 +59,10 @@ const SeanceSeats: FC<SeanceSeatsProps> = ({ seats, className }) => {
         ))}
       </div>
 
-      {/* separate component */}
-      {selectedSeat && (
-        <Accordion type="single" collapsible defaultValue="selected-seat">
-          <AccordionItem value="selected-seat" className="border-none">
-            <div className="rounded-md border bg-muted/50 p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="text-sm">
-                    <div className="font-medium">Выбранное место</div>
-                    <div className="text-muted-foreground">
-                      Ряд {selectedSeat.row}, место {selectedSeat.place}
-                    </div>
-                  </div>
-                </div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <MoreVertical className="h-4 w-4" />
-                      <span className="sr-only">
-                        Действия с местом {selectedSeat.place}
-                      </span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-[200px]">
-                    <ReserveSeatButton
-                      seat={selectedSeat}
-                      onSuccess={() => setSelectedSeat(null)}
-                    />
-                    {!!selectedSeat.version && (
-                      <ResetSeatButton
-                        seat={selectedSeat}
-                        onSuccess={() => setSelectedSeat(null)}
-                      />
-                    )}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </div>
-          </AccordionItem>
-        </Accordion>
-      )}
+      <SelectedSeatCard
+        selectedSeat={selectedSeat}
+        unselect={() => setSelectedSeat(null)}
+      />
     </div>
   );
 };
