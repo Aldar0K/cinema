@@ -1,18 +1,18 @@
-import { Pencil } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useState, type FC } from "react";
 
 import type { Movie } from "@/entities/movie";
 import { Button } from "@/shared/ui";
 import { cn } from "@/shared/utils";
-import { EditMovieDialog } from "./EditMovieDialog";
+import { CreateSeanceDialog } from "./CreateSeanceDialog";
 
-export type EditMovieButtonProps = {
+export type CreateSeanceButtonProps = {
   movie: Movie;
   size?: "default" | "sm" | "lg" | "icon";
   className?: string;
 };
 
-const EditMovieButton: FC<EditMovieButtonProps> = (props) => {
+const CreateSeanceButton: FC<CreateSeanceButtonProps> = (props) => {
   const { movie, size = "icon", className } = props;
   const [open, setOpen] = useState(false);
 
@@ -27,12 +27,12 @@ const EditMovieButton: FC<EditMovieButtonProps> = (props) => {
         }}
         className={cn("flex items-center gap-2", className)}
       >
-        <Pencil className="h-4 w-4" />
+        <Plus className="h-4 w-4" />
       </Button>
 
-      <EditMovieDialog movie={movie} open={open} setOpen={setOpen} />
+      <CreateSeanceDialog movie={movie} open={open} setOpen={setOpen} />
     </>
   );
 };
 
-export default EditMovieButton;
+export default CreateSeanceButton;

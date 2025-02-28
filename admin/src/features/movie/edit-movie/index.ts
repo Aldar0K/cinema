@@ -1,1 +1,1 @@
-export { EditMovieButton } from "./ui/EditMovieButton";
+export { EditMovieButton } from "./ui/EditMovieButton.lazy";

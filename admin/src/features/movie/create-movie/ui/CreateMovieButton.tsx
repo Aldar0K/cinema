@@ -4,7 +4,7 @@ import { type FC, useState } from "react";
 import { Button, Dialog } from "@/shared/ui";
 import { CreateMovieDialog } from "./CreateMovieDialog";
 
-type CreateMovieButtonProps = {
+export type CreateMovieButtonProps = {
   className?: string;
 };
 

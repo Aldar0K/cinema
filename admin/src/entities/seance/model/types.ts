@@ -8,3 +8,12 @@ export type Seance = {
   movie?: Movie;
   seats?: Seat[];
 };
+
+export type CreateSeanceDto = {
+  body: {
+    movieId: number;
+    time: Date;
+  };
+};
+
+export type CreateSeanceResponse = Seance;

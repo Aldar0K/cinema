@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { useGetMovieQuery } from "@/entities/movie";
 import { EditMovieButton } from "@/features/movie/edit-movie";
+import { CreateSeanceButton } from "@/features/seance/create-seance";
 import { SeanceList } from "@/features/seance/seance-list";
 import { Alert, AlertDescription } from "@/shared/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
@@ -56,8 +57,11 @@ const MoviePage: FC = () => {
             </p>
           </div>
         </div>
-        {/* <AddSeanceButton movie={movie} /> */}
-        <EditMovieButton movie={movie} size="default" />
+
+        <div className="flex items-center gap-2">
+          <EditMovieButton movie={movie} size="default" />
+          <CreateSeanceButton movie={movie} size="default" />
+        </div>
       </div>
       <SeanceList seances={movie.seances} />
     </main>
