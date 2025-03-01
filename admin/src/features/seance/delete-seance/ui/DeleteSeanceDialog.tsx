@@ -1,6 +1,6 @@
 import type { FC } from "react";
 
-import { Movie, useDeleteMovieMutation } from "@/entities/movie";
+import { Seance, useDeleteSeanceMutation } from "@/entities/seance";
 import {
   Button,
   Dialog,
@@ -10,19 +10,23 @@ import {
   DialogTitle,
 } from "@/shared/ui";
 
-type DeleteMovieDialogProps = {
-  movie: Movie;
+type DeleteSeanceDialogProps = {
+  seance: Seance;
   open: boolean;
   setOpen: (open: boolean) => void;
 };
 
-export const DeleteMovieDialog: FC<DeleteMovieDialogProps> = (props) => {
-  const { movie, open, setOpen } = props;
-  const [deleteMovie, { isLoading }] = useDeleteMovieMutation();
+export const DeleteSeanceDialog: FC<DeleteSeanceDialogProps> = (props) => {
+  const {
+    seance: { id: seanceId },
+    open,
+    setOpen,
+  } = props;
+  const [deleteSeance, { isLoading }] = useDeleteSeanceMutation();
 
   const handleDelete = async () => {
     try {
-      await deleteMovie({ id: movie.id }).unwrap();
+      await deleteSeance({ seanceId }).unwrap();
       setOpen(false);
     } catch (error) {
       // Handle error
@@ -33,9 +37,9 @@ export const DeleteMovieDialog: FC<DeleteMovieDialogProps> = (props) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete Movie</DialogTitle>
+          <DialogTitle>Delete Seance</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this movie? This action cannot be
+            Are you sure you want to delete this seance? This action cannot be
             undone.
           </DialogDescription>
         </DialogHeader>

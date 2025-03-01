@@ -4,6 +4,8 @@ import { Calendar } from "lucide-react";
 import { FC, useState } from "react";
 
 import type { Seance } from "@/entities/seance";
+import { DeleteSeanceButton } from "@/features/seance/delete-seance";
+import { EditSeanceButton } from "@/features/seance/edit-seance";
 import { SeanceModal } from "@/features/seance/seance-modal";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 import { cn } from "@/shared/utils";
@@ -15,7 +17,7 @@ export type SeanceCardProps = {
 };
 
 const SeanceCard: FC<SeanceCardProps> = (props) => {
-  const { seance } = props;
+  const { seance, editable = false, deleteable = false } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const date = new Date(seance.time);
@@ -44,8 +46,8 @@ const SeanceCard: FC<SeanceCardProps> = (props) => {
           </div>
 
           <div className="flex justify-end gap-2">
-            {/* {editable && <EditSeanceButton seance={seance} />} */}
-            {/* {deleteable && <DeleteSeanceButton seance={seance} />} */}
+            {editable && <EditSeanceButton seance={seance} />}
+            {deleteable && <DeleteSeanceButton seance={seance} />}
           </div>
         </CardContent>
       </Card>

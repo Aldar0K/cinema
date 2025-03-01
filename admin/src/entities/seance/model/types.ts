@@ -17,3 +17,18 @@ export type CreateSeanceDto = {
 };
 
 export type CreateSeanceResponse = Seance;
+
+export type UpdateSeanceDto = {
+  seanceId: number;
+  body: {
+    time: Date;
+  };
+};
+
+export type UpdateSeanceResponse = Seance;
+
+export type DeleteSeanceDto = {
+  seanceId: number;
+};
+
+export type DeleteSeanceResponse = void;

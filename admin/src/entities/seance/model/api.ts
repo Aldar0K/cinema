@@ -1,6 +1,13 @@
 import { baseApi } from "@/shared/api";
 
-import { CreateSeanceDto, CreateSeanceResponse } from "./types";
+import {
+  CreateSeanceDto,
+  CreateSeanceResponse,
+  DeleteSeanceDto,
+  DeleteSeanceResponse,
+  UpdateSeanceDto,
+  UpdateSeanceResponse,
+} from "./types";
 
 export const seanceApi = baseApi
   .enhanceEndpoints({
@@ -16,7 +23,28 @@ export const seanceApi = baseApi
         }),
         invalidatesTags: ["movie"],
       }),
+
+      updateSeance: builder.mutation<UpdateSeanceResponse, UpdateSeanceDto>({
+        query: ({ seanceId, body }) => ({
+          url: `seances/${seanceId}`,
+          method: "PATCH",
+          body,
+        }),
+        invalidatesTags: ["movie"],
+      }),
+
+      deleteSeance: builder.mutation<DeleteSeanceResponse, DeleteSeanceDto>({
+        query: ({ seanceId }) => ({
+          url: `seances/${seanceId}`,
+          method: "DELETE",
+        }),
+        invalidatesTags: ["movie"],
+      }),
     }),
   });
 
-export const { useCreateSeanceMutation } = seanceApi;
+export const {
+  useCreateSeanceMutation,
+  useUpdateSeanceMutation,
+  useDeleteSeanceMutation,
+} = seanceApi;

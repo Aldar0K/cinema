@@ -18,7 +18,7 @@ const SeanceList: FC<SeanceListProps> = (props) => {
       data-testid="SeanceList"
     >
       {seances.map((seance) => (
-        <SeanceCard key={seance.id} seance={seance} />
+        <SeanceCard key={seance.id} seance={seance} editable deleteable />
       ))}
     </div>
   );
