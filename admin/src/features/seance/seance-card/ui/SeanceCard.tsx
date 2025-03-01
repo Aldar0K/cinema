@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
-import { Calendar } from "lucide-react";
+import { Clock } from "lucide-react";
 import { FC, useState } from "react";
 
 import type { Seance } from "@/entities/seance";
@@ -14,10 +14,11 @@ export type SeanceCardProps = {
   seance: Seance;
   editable?: boolean;
   deleteable?: boolean;
+  className?: string;
 };
 
 const SeanceCard: FC<SeanceCardProps> = (props) => {
-  const { seance, editable = false, deleteable = false } = props;
+  const { seance, editable = false, deleteable = false, className } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const date = new Date(seance.time);
@@ -29,21 +30,30 @@ const SeanceCard: FC<SeanceCardProps> = (props) => {
     <>
       <Card
         onClick={() => setIsModalOpen(true)}
-        className={cn("cursor-pointer transition-shadow hover:shadow-md")}
-        role="listitem"
+        className={cn(
+          "cursor-pointer transition-shadow hover:shadow-md",
+          className,
+        )}
+        role="button"
         aria-label={`Сеанс фильма ${seance.movie.name} ${formattedDate} в ${formattedTime}`}
       >
-        <CardHeader>
-          <CardTitle>{seance.movie.name}</CardTitle>
-        </CardHeader>
-
-        <CardContent className="space-y-2">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <Calendar className="h-4 w-4" />
-            <time dateTime={machineReadableDate}>
-              {formattedDate}, {formattedTime}
+        <CardHeader className="pb-2">
+          <div className="flex items-center gap-2">
+            <Clock className="h-5 w-5 text-primary" />
+            <time
+              dateTime={machineReadableDate}
+              className="text-xl font-semibold"
+            >
+              {formattedTime}
             </time>
           </div>
+        </CardHeader>
+
+        <CardContent className="space-y-1.5">
+          <CardTitle className="text-base font-medium">
+            {seance.movie.name}
+          </CardTitle>
+          <div className="text-sm text-muted-foreground">{formattedDate}</div>
 
           <div className="flex justify-end gap-2">
             {editable && <EditSeanceButton seance={seance} />}

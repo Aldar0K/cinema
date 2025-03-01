@@ -63,7 +63,7 @@ export const EditSeanceForm: FC<EditSeanceFormProps> = (props) => {
           name="time"
           render={({ field: { value, onChange } }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Seance time:</FormLabel>
               <FormControl>
                 <DateTimePicker date={value} setDate={onChange} />
               </FormControl>
