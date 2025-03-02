@@ -1,7 +1,7 @@
-import type { FC } from "react";
+import { useMemo, type FC } from "react";
 
-import { Seance } from "@/entities/seance";
-import { SeanceCard } from "@/features/seance/seance-card";
+import { groupSeances, Seance } from "@/entities/seance";
+import { SeanceGroupCard } from "@/features/seance/seance-group-card";
 import { cn } from "@/shared/utils";
 
 export type SeanceListProps = {
@@ -12,13 +12,30 @@ export type SeanceListProps = {
 const SeanceList: FC<SeanceListProps> = (props) => {
   const { seances, className } = props;
 
+  const groupedSeances = useMemo(() => {
+    return groupSeances(seances);
+  }, [seances]);
+
+  if (!seances.length) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-muted-foreground">Нет доступных сеансов</p>
+      </div>
+    );
+  }
+
   return (
     <div
-      className={cn("grid gap-4 md:grid-cols-2 lg:grid-cols-3", className)}
+      className={cn("flex flex-col gap-8", className)}
       data-testid="SeanceList"
     >
-      {seances.map((seance) => (
-        <SeanceCard key={seance.id} seance={seance} editable deleteable />
+      {groupedSeances.map((groupedSeance) => (
+        <SeanceGroupCard
+          key={groupedSeance.date.getTime()}
+          groupedSeance={groupedSeance}
+          editable
+          deleteable
+        />
       ))}
     </div>
   );

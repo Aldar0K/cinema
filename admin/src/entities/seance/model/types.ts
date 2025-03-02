@@ -9,6 +9,11 @@ export type Seance = {
   seats?: Seat[];
 };
 
+export type GroupedSeance = {
+  date: Date;
+  seances: Seance[];
+};
+
 export type CreateSeanceDto = {
   body: {
     movieId: number;
