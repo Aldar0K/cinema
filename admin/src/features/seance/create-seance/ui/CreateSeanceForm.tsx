@@ -33,6 +33,9 @@ export const CreateSeanceForm: FC<CreateSeanceFormProps> = (props) => {
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      time: new Date(),
+    }
   });
 
   const onSubmit = async (data: FormData) => {

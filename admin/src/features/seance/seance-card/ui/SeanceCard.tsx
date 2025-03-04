@@ -25,6 +25,7 @@ const SeanceCard: FC<SeanceCardProps> = (props) => {
   const formattedDate = format(date, "dd.MM.yyyy", { locale: ru });
   const formattedTime = format(date, "HH:mm");
   const machineReadableDate = format(date, "yyyy-MM-dd'T'HH:mm:ss");
+  const isPassed = date < new Date();
 
   return (
     <>
@@ -32,6 +33,7 @@ const SeanceCard: FC<SeanceCardProps> = (props) => {
         onClick={() => setIsModalOpen(true)}
         className={cn(
           "cursor-pointer transition-shadow hover:shadow-md",
+          { "opacity-50 pointer-events-none": isPassed },
           className,
         )}
         role="button"
@@ -56,8 +58,8 @@ const SeanceCard: FC<SeanceCardProps> = (props) => {
           <div className="text-sm text-muted-foreground">{formattedDate}</div>
 
           <div className="flex justify-end gap-2">
-            {editable && <EditSeanceButton seance={seance} />}
-            {deleteable && <DeleteSeanceButton seance={seance} />}
+            {!isPassed && editable && <EditSeanceButton seance={seance} />}
+            {!isPassed && deleteable && <DeleteSeanceButton seance={seance} />}
           </div>
         </CardContent>
       </Card>
