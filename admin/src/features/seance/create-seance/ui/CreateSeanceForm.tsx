@@ -23,19 +23,20 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 type CreateSeanceFormProps = {
+  initialDate?: Date;
   movie: Movie;
   onSuccess: () => void;
 };
 
 export const CreateSeanceForm: FC<CreateSeanceFormProps> = (props) => {
-  const { movie, onSuccess } = props;
+  const { initialDate, movie, onSuccess } = props;
   const [createSeance, { isLoading }] = useCreateSeanceMutation();
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      time: new Date(),
-    }
+      time: initialDate || new Date(),
+    },
   });
 
   const onSubmit = async (data: FormData) => {
@@ -71,7 +72,6 @@ export const CreateSeanceForm: FC<CreateSeanceFormProps> = (props) => {
             </FormItem>
           )}
         />
-
         <div className="flex justify-end gap-4">
           <Button type="button" variant="outline" onClick={onSuccess}>
             Cancel

@@ -63,7 +63,7 @@ const MoviePage: FC = () => {
           <CreateSeanceButton movie={movie} size="default" />
         </div>
       </div>
-      <SeanceList seances={movie.seances} />
+      <SeanceList movie={movie} seances={movie.seances} />
     </main>
   );
 };

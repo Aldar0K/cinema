@@ -1,6 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
+import { ru } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 import { ComponentProps, Dispatch, FC, SetStateAction, useState } from "react";
 
@@ -25,30 +26,20 @@ export const DateTimePicker: FC<DateTimePickerProps> = (props) => {
   const { date, setDate, className } = props;
   const [isOpen, setIsOpen] = useState(false);
 
-  const hours = Array.from({ length: 12 }, (_, i) => i + 1);
+  const hours = Array.from({ length: 24 }, (_, i) => i);
   const handleDateSelect = (selectedDate: Date | undefined) => {
     if (selectedDate) {
       setDate(selectedDate);
     }
   };
 
-  const handleTimeChange = (
-    type: "hour" | "minute" | "ampm",
-    value: string,
-  ) => {
+  const handleTimeChange = (type: "hour" | "minute", value: string) => {
     if (date) {
       const newDate = new Date(date);
       if (type === "hour") {
-        newDate.setHours(
-          (parseInt(value) % 12) + (newDate.getHours() >= 12 ? 12 : 0),
-        );
+        newDate.setHours(parseInt(value));
       } else if (type === "minute") {
         newDate.setMinutes(parseInt(value));
-      } else if (type === "ampm") {
-        const currentHours = newDate.getHours();
-        newDate.setHours(
-          value === "PM" ? currentHours + 12 : currentHours - 12,
-        );
       }
       setDate(newDate);
     }
@@ -66,11 +57,11 @@ export const DateTimePicker: FC<DateTimePickerProps> = (props) => {
             className,
           )}
         >
-          <CalendarIcon />
+          <CalendarIcon className="mr-2 h-4 w-4" />
           {date ? (
-            format(date, "dd/MM/yyyy hh:mm aa")
+            format(date, "MM/dd/yyyy HH:mm", { locale: ru })
           ) : (
-            <span>DD/MM/YYYY hh:mm aa</span>
+            <span>MM/DD/YYYY hh:mm</span>
           )}
         </Button>
       </PopoverTrigger>
@@ -90,9 +81,7 @@ export const DateTimePicker: FC<DateTimePickerProps> = (props) => {
                     key={hour}
                     size="icon"
                     variant={
-                      date && date.getHours() % 12 === hour % 12
-                        ? "default"
-                        : "ghost"
+                      date && date.getHours() === hour ? "default" : "ghost"
                     }
                     className="sm:w-full shrink-0 aspect-square"
                     onClick={() => handleTimeChange("hour", hour.toString())}
@@ -117,32 +106,11 @@ export const DateTimePicker: FC<DateTimePickerProps> = (props) => {
                       handleTimeChange("minute", minute.toString())
                     }
                   >
-                    {minute}
+                    {minute.toString().padStart(2, "0")}
                   </Button>
                 ))}
               </div>
               <ScrollBar orientation="horizontal" className="sm:hidden" />
-            </ScrollArea>
-            <ScrollArea className="">
-              <div className="flex sm:flex-col p-2">
-                {["AM", "PM"].map((ampm) => (
-                  <Button
-                    key={ampm}
-                    size="icon"
-                    variant={
-                      date &&
-                      ((ampm === "AM" && date.getHours() < 12) ||
-                        (ampm === "PM" && date.getHours() >= 12))
-                        ? "default"
-                        : "ghost"
-                    }
-                    className="sm:w-full shrink-0 aspect-square"
-                    onClick={() => handleTimeChange("ampm", ampm)}
-                  >
-                    {ampm}
-                  </Button>
-                ))}
-              </div>
             </ScrollArea>
           </div>
         </div>

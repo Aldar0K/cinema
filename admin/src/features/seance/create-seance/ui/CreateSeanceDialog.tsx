@@ -11,13 +11,14 @@ import {
 import { CreateSeanceForm } from "./CreateSeanceForm";
 
 type CreateSeanceDialogProps = {
+  initialDate?: Date;
   movie: Movie;
   open: boolean;
   setOpen: (open: boolean) => void;
 };
 
 export const CreateSeanceDialog: FC<CreateSeanceDialogProps> = (props) => {
-  const { movie, open, setOpen } = props;
+  const { initialDate, movie, open, setOpen } = props;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -28,7 +29,11 @@ export const CreateSeanceDialog: FC<CreateSeanceDialogProps> = (props) => {
             Create a new seance for the movie: {movie.name}
           </DialogDescription>
         </DialogHeader>
-        <CreateSeanceForm movie={movie} onSuccess={() => setOpen(false)} />
+        <CreateSeanceForm
+          initialDate={initialDate}
+          movie={movie}
+          onSuccess={() => setOpen(false)}
+        />
       </DialogContent>
     </Dialog>
   );

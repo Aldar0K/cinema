@@ -1,16 +1,18 @@
 import { useMemo, type FC } from "react";
 
+import { Movie } from "@/entities/movie";
 import { groupSeances, Seance } from "@/entities/seance";
 import { SeanceGroupCard } from "@/features/seance/seance-group-card";
 import { cn } from "@/shared/utils";
 
 export type SeanceListProps = {
-  seances?: Seance[];
+  movie: Movie;
+  seances: Seance[];
   className?: string;
 };
 
 const SeanceList: FC<SeanceListProps> = (props) => {
-  const { seances, className } = props;
+  const { movie, seances, className } = props;
 
   const groupedSeances = useMemo(() => {
     return groupSeances(seances);
@@ -32,6 +34,7 @@ const SeanceList: FC<SeanceListProps> = (props) => {
       {groupedSeances.map((groupedSeance) => (
         <SeanceGroupCard
           key={groupedSeance.date.getTime()}
+          movie={movie}
           groupedSeance={groupedSeance}
           editable
           deleteable

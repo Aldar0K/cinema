@@ -7,13 +7,14 @@ import { cn } from "@/shared/utils";
 import { CreateSeanceDialog } from "./CreateSeanceDialog";
 
 export type CreateSeanceButtonProps = {
+  initialDate?: Date;
   movie: Movie;
   size?: "default" | "sm" | "lg" | "icon";
   className?: string;
 };
 
 const CreateSeanceButton: FC<CreateSeanceButtonProps> = (props) => {
-  const { movie, size = "icon", className } = props;
+  const { initialDate, movie, size = "icon", className } = props;
   const [open, setOpen] = useState(false);
 
   return (
@@ -30,7 +31,12 @@ const CreateSeanceButton: FC<CreateSeanceButtonProps> = (props) => {
         <Plus className="h-4 w-4" />
       </Button>
 
-      <CreateSeanceDialog movie={movie} open={open} setOpen={setOpen} />
+      <CreateSeanceDialog
+        initialDate={initialDate}
+        movie={movie}
+        open={open}
+        setOpen={setOpen}
+      />
     </>
   );
 };
