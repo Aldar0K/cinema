@@ -27,7 +27,6 @@ services:
       - "3001:3001"
     volumes:
       - ../backend:/usr/app
-      - backend-node_modules:/usr/app/node_modules
     environment:
       DATABASE_URL: ${DATABASE_URL}
       HASH_SALT: ${HASH_SALT}
@@ -40,7 +39,6 @@ services:
     working_dir: /usr/app
     volumes:
       - ../backend:/usr/app
-      - backend-node_modules:/usr/app/node_modules
     command: sh -c "npx prisma studio --port 5555"
     ports:
       - "5555:5555"
@@ -59,7 +57,6 @@ services:
       - "3000:3000"
     volumes:
       - ../admin:/usr/app
-      - admin-node_modules:/usr/app/node_modules
     environment:
       VITE_IS_DEV: ${VITE_IS_DEV}
       VITE_BACKEND_URL: ${VITE_BACKEND_URL}
@@ -70,5 +67,3 @@ networks:
   cinema:
 volumes:
   db:
-  backend-node_modules:
-  admin-node_modules:
