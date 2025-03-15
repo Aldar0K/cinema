@@ -7,10 +7,12 @@ import {
   MoviesPage,
   preloadHomePage,
   preloadMoviesPage,
+  SeancesPage,
+  UsersPage,
 } from "@/pages/authorized";
+import { MoviePage } from "@/pages/authorized/movie";
 import { NavigationLink } from "@/shared/types";
 import { PageSkeleton, PageTransition } from "@/shared/ui";
-import { MoviePage } from "@/pages/authorized/movie";
 
 export enum AdminRoutes {
   MAIN = "main",
@@ -84,11 +86,11 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
   },
   [AdminRoutes.SEANCES]: {
     path: AdminPaths[AdminRoutes.SEANCES],
-    element: withLayout(<h1>SeancesPage</h1>),
+    element: withLayout(<SeancesPage />),
   },
   [AdminRoutes.USERS]: {
     path: AdminPaths[AdminRoutes.USERS],
-    element: withLayout(<h1>UsersPage</h1>),
+    element: withLayout(<UsersPage />),
   },
   [AdminRoutes.FINANCE]: {
     path: AdminPaths[AdminRoutes.FINANCE],

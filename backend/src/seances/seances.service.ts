@@ -25,7 +25,9 @@ export class SeancesService {
   }
 
   async findAll() {
-    return this.prisma.seance.findMany();
+    return this.prisma.seance.findMany({
+      include: { movie: true, seats: true },
+    });
   }
 
   async findOne(id: number) {

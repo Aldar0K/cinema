@@ -10,7 +10,7 @@ import {
 
 export const seatApi = baseApi
   .enhanceEndpoints({
-    addTagTypes: ["movie", "seats", "seat"],
+    addTagTypes: ["movie", "seances", "seance", "seats", "seat"],
   })
   .injectEndpoints({
     endpoints: (builder) => ({
@@ -24,7 +24,7 @@ export const seatApi = baseApi
             handleError(error);
           });
         },
-        invalidatesTags: ["movie", "seats", "seat"],
+        invalidatesTags: ["movie", "seances", "seance", "seats", "seat"],
       }),
 
       unreserveSeat: builder.mutation<UnreserveSeatResponse, UnreserveSeatDto>({
@@ -37,7 +37,7 @@ export const seatApi = baseApi
             handleError(error);
           });
         },
-        invalidatesTags: ["movie", "seats", "seat"],
+        invalidatesTags: ["movie", "seances", "seance", "seats", "seat"],
       }),
     }),
   });

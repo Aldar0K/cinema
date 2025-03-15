@@ -1,20 +1,28 @@
 import { useMemo, type FC } from "react";
 
-import { groupSeances, Seance } from "@/entities/seance";
+import { groupSeances, useGetSeancesQuery } from "@/entities/seance";
 import { SeanceGroupCard } from "@/features/seance/seance-group-card";
 import { cn } from "@/shared/utils";
+import { SeanceListAllSkeleton } from "./SeanceListAllSkeleton";
 
-export type SeanceListProps = {
-  seances: Seance[];
+export type SeanceListAllProps = {
   className?: string;
 };
 
-const SeanceList: FC<SeanceListProps> = (props) => {
-  const { seances, className } = props;
+const SeanceListAll: FC<SeanceListAllProps> = (props) => {
+  const { className } = props;
+  const { data: seances, isLoading } = useGetSeancesQuery();
 
   const groupedSeances = useMemo(() => {
+    if (!seances) {
+      return [];
+    }
     return groupSeances(seances);
   }, [seances]);
+
+  if (isLoading) {
+    return <SeanceListAllSkeleton />;
+  }
 
   if (!seances.length) {
     return (
@@ -27,7 +35,7 @@ const SeanceList: FC<SeanceListProps> = (props) => {
   return (
     <div
       className={cn("flex flex-col gap-8", className)}
-      data-testid="SeanceList"
+      data-testid="SeanceListAll"
     >
       {groupedSeances.map((groupedSeance) => (
         <SeanceGroupCard
@@ -35,11 +43,10 @@ const SeanceList: FC<SeanceListProps> = (props) => {
           groupedSeance={groupedSeance}
           editable
           deleteable
-          createable
         />
       ))}
     </div>
   );
 };
 
-export default SeanceList;
+export default SeanceListAll;

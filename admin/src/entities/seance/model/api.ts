@@ -5,6 +5,9 @@ import {
   CreateSeanceResponse,
   DeleteSeanceDto,
   DeleteSeanceResponse,
+  GetSeanceDto,
+  GetSeanceResponse,
+  GetSeancesResponse,
   UpdateSeanceDto,
   UpdateSeanceResponse,
 } from "./types";
@@ -15,13 +18,29 @@ export const seanceApi = baseApi
   })
   .injectEndpoints({
     endpoints: (builder) => ({
+      getSeances: builder.query<GetSeancesResponse, void>({
+        query: () => ({
+          url: "seances",
+          method: "GET",
+        }),
+        providesTags: ["seances"],
+      }),
+
+      getSeance: builder.query<GetSeanceResponse, GetSeanceDto>({
+        query: ({ seanceId }) => ({
+          url: `seances/${seanceId}`,
+          method: "GET",
+        }),
+        providesTags: ["seance"],
+      }),
+
       createSeance: builder.mutation<CreateSeanceResponse, CreateSeanceDto>({
         query: ({ body }) => ({
           url: "seances",
           method: "POST",
           body,
         }),
-        invalidatesTags: ["movie"],
+        invalidatesTags: ["movie", "seances"],
       }),
 
       updateSeance: builder.mutation<UpdateSeanceResponse, UpdateSeanceDto>({
@@ -30,7 +49,7 @@ export const seanceApi = baseApi
           method: "PATCH",
           body,
         }),
-        invalidatesTags: ["movie"],
+        invalidatesTags: ["movie", "seances", "seance"],
       }),
 
       deleteSeance: builder.mutation<DeleteSeanceResponse, DeleteSeanceDto>({
@@ -38,12 +57,14 @@ export const seanceApi = baseApi
           url: `seances/${seanceId}`,
           method: "DELETE",
         }),
-        invalidatesTags: ["movie"],
+        invalidatesTags: ["movie", "seances"],
       }),
     }),
   });
 
 export const {
+  useGetSeancesQuery,
+  useGetSeanceQuery,
   useCreateSeanceMutation,
   useUpdateSeanceMutation,
   useDeleteSeanceMutation,

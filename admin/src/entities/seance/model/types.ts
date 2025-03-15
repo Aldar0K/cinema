@@ -14,6 +14,14 @@ export type GroupedSeance = {
   seances: Seance[];
 };
 
+export type GetSeancesResponse = Seance[];
+
+export type GetSeanceDto = {
+  seanceId: string;
+};
+
+export type GetSeanceResponse = Seance;
+
 export type CreateSeanceDto = {
   body: {
     movieId: number;
