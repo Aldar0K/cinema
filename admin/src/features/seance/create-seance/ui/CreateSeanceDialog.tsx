@@ -12,7 +12,7 @@ import { CreateSeanceForm } from "./CreateSeanceForm";
 
 type CreateSeanceDialogProps = {
   initialDate?: Date;
-  movie: Movie;
+  movie?: Movie;
   open: boolean;
   setOpen: (open: boolean) => void;
 };
@@ -26,7 +26,7 @@ export const CreateSeanceDialog: FC<CreateSeanceDialogProps> = (props) => {
         <DialogHeader>
           <DialogTitle>Create Seance</DialogTitle>
           <DialogDescription>
-            Create a new seance for the movie: {movie.name}
+            Create a new seance for the movie: {movie?.name}
           </DialogDescription>
         </DialogHeader>
         <CreateSeanceForm

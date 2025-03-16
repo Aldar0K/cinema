@@ -19,6 +19,7 @@ export * from "./popover";
 export * from "./portal";
 export * from "./route-loader";
 export * from "./scroll-area";
+export * from "./select";
 export * from "./skeleton";
 export * from "./toast";
 export * from "./toaster";

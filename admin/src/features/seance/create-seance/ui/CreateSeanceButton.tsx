@@ -8,7 +8,7 @@ import { CreateSeanceDialog } from "./CreateSeanceDialog";
 
 export type CreateSeanceButtonProps = {
   initialDate?: Date;
-  movie: Movie;
+  movie?: Movie;
   size?: "default" | "sm" | "lg" | "icon";
   className?: string;
 };

@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Calendar, ChevronDown } from "lucide-react";
 import { FC, useState } from "react";
 
+import { Movie } from "@/entities/movie";
 import type { GroupedSeance } from "@/entities/seance";
 import { CreateSeanceButton } from "@/features/seance/create-seance";
 import { SeanceCard } from "@/features/seance/seance-card";
@@ -14,7 +15,7 @@ export type SeanceGroupCardProps = {
   groupedSeance: GroupedSeance;
   editable?: boolean;
   deleteable?: boolean;
-  createable?: boolean;
+  movie?: Movie;
   className?: string;
 };
 
@@ -23,7 +24,7 @@ const SeanceGroupCard: FC<SeanceGroupCardProps> = (props) => {
     groupedSeance: { date, seances },
     editable = false,
     deleteable = false,
-    createable = false,
+    movie,
     className,
   } = props;
 
@@ -105,17 +106,15 @@ const SeanceGroupCard: FC<SeanceGroupCardProps> = (props) => {
                     className={cn(isPassed && "opacity-70")}
                   />
                 ))}
-                {createable && (
-                  <CreateSeanceButton
-                    initialDate={addHours(
-                      new Date(seances[seances.length - 1].time),
-                      2,
-                    )}
-                    movie={seances[0].movie}
-                    size="lg"
-                    className="min-h-[181.33px] h-full w-full"
-                  />
-                )}
+                <CreateSeanceButton
+                  initialDate={addHours(
+                    new Date(seances[seances.length - 1].time),
+                    2,
+                  )}
+                  movie={movie}
+                  size="lg"
+                  className="min-h-[181.33px] h-full w-full"
+                />
               </div>
             </div>
           </motion.div>

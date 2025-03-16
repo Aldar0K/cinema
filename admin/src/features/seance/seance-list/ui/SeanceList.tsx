@@ -35,7 +35,7 @@ const SeanceList: FC<SeanceListProps> = (props) => {
           groupedSeance={groupedSeance}
           editable
           deleteable
-          createable
+          movie={groupedSeance.seances[0].movie}
         />
       ))}
     </div>
