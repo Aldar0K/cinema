@@ -1,6 +1,7 @@
 import { type FC } from "react";
 
 import { useGetUsersQuery } from "@/entities/user";
+import { UserCard } from "@/features/user/user-card";
 import { cn } from "@/shared/utils";
 import { UsersListAllSkeleton } from "./UsersListAllSkeleton";
 
@@ -26,17 +27,13 @@ const UsersListAll: FC<UsersListAllProps> = (props) => {
 
   return (
     <div
-      className={cn("flex flex-col gap-8", className)}
+      className={cn("grid gap-4 sm:grid-cols-2 lg:grid-cols-3", className)}
+      role="list"
       data-testid="UsersListAll"
     >
-      {/* {users.map((groupedSeance) => (
-        <SeanceGroupCard
-          key={groupedSeance.date.getTime()}
-          groupedSeance={groupedSeance}
-          editable
-          deleteable
-        />
-      ))} */}
+      {users.map((user) => (
+        <UserCard key={user.id} user={user} editable deleteable />
+      ))}
     </div>
   );
 };
