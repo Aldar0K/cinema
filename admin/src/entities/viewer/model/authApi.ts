@@ -11,7 +11,7 @@ export const viewerApi = baseApi
     endpoints: (builder) => ({
       getViewer: builder.query<GetViewerResponse, void>({
         query: () => ({
-          url: "/users",
+          url: "/auth/profile",
           method: "GET",
         }),
         providesTags: ["viewer"],

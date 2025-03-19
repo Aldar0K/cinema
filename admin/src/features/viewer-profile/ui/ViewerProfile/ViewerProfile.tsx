@@ -13,7 +13,7 @@ type ViewerProfileProps = {
 const ViewerProfile: FC<ViewerProfileProps> = (props) => {
   const { className } = props;
   const dispatch = useAppDispatch();
-  const { data, isLoading } = useGetViewerQuery();
+  const { data: viewer, isLoading } = useGetViewerQuery();
 
   const logout = () => {
     dispatch(authActions.signOut());
@@ -31,12 +31,9 @@ const ViewerProfile: FC<ViewerProfileProps> = (props) => {
     );
   }
 
-  if (!data) {
+  if (!viewer) {
     return <h2>No data</h2>;
   }
-
-  // TODO update
-  const viewer = data[0];
 
   return (
     <div
