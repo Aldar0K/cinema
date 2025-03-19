@@ -3,9 +3,7 @@ import { Navigate, RouteProps } from "react-router-dom";
 
 import { AuthorizedLayout } from "@/layouts/authorized";
 import {
-  HomePage,
   MoviesPage,
-  preloadHomePage,
   preloadMoviesPage,
   SeancesPage,
   UsersPage,
@@ -40,11 +38,6 @@ export const AdminPaths: Record<AdminRoutes, string> = {
 
 export const adminNavigationLinks: NavigationLink[] = [
   {
-    title: "Главная",
-    link: AdminPaths[AdminRoutes.MAIN],
-    preloadFn: preloadHomePage,
-  },
-  {
     title: "Фильмы",
     link: AdminPaths[AdminRoutes.MOVIES],
     preloadFn: preloadMoviesPage,
@@ -74,7 +67,7 @@ const withLayout = (component: ReactNode) => (
 export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
   [AdminRoutes.MAIN]: {
     path: AdminPaths[AdminRoutes.MAIN],
-    element: withLayout(<HomePage />),
+    element: <Navigate to={AdminPaths[AdminRoutes.MOVIES]} replace />,
   },
   [AdminRoutes.MOVIES]: {
     path: AdminPaths[AdminRoutes.MOVIES],
@@ -106,6 +99,6 @@ export const AdminRouteConfig: Record<AdminRoutes, RouteProps> = {
   },
   [AdminRoutes.NOT_FOUND]: {
     path: AdminPaths[AdminRoutes.NOT_FOUND],
-    element: <Navigate to={AdminPaths[AdminRoutes.MAIN]} replace />,
+    element: <Navigate to={AdminPaths[AdminRoutes.MOVIES]} replace />,
   },
 };

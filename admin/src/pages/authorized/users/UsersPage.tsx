@@ -1,16 +1,12 @@
 import { FC } from "react";
 
 import { cn } from "@/shared/utils";
-import cls from "./UsersPage.module.scss";
+import { UsersListAll } from "@/widgets/users-list-all";
 
 const UsersPage: FC = () => {
   return (
-    <main className={cn(`main`)} data-testid="UsersPage">
-      <div className={cn(cls.container)}>
-        <div className={cn(cls.content)}>
-          <h1>UsersPage</h1>
-        </div>
-      </div>
+    <main className={cn("space-y-6")} data-testid="SeancesPage">
+      <UsersListAll />
     </main>
   );
 };

@@ -35,6 +35,7 @@ const ViewerProfile: FC<ViewerProfileProps> = (props) => {
     return <h2>No data</h2>;
   }
 
+  // TODO update
   const viewer = data[0];
 
   return (

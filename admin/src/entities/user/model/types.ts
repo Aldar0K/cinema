@@ -1,4 +1,6 @@
 export type UserEntity = {
-  id: string;
+  id: number;
   email: string;
 };
+
+export type GetUsersResponse = UserEntity[];

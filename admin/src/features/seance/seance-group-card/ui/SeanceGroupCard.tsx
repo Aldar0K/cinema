@@ -35,8 +35,11 @@ const SeanceGroupCard: FC<SeanceGroupCardProps> = (props) => {
   const [isOpen, setIsOpen] = useState(!isPassed);
 
   return (
-    <div className={cn("border rounded-md p-4", className)}>
-      <div className="flex items-center justify-between">
+    <div className={cn("border rounded-md", className)}>
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="p-4 flex items-center justify-between"
+      >
         <div className="flex items-center gap-2">
           <Calendar className="h-5 w-5 text-primary" />
           <h2 className="text-xl font-semibold">{capitalizedDate}</h2>
@@ -53,7 +56,6 @@ const SeanceGroupCard: FC<SeanceGroupCardProps> = (props) => {
           variant="ghost"
           size="sm"
           className="w-9 p-0"
-          onClick={() => setIsOpen(!isOpen)}
           aria-expanded={isOpen}
         >
           <motion.div
@@ -91,7 +93,7 @@ const SeanceGroupCard: FC<SeanceGroupCardProps> = (props) => {
             }}
             className="overflow-hidden"
           >
-            <div className="pt-4">
+            <div className="p-4">
               <div
                 className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
                 role="list"

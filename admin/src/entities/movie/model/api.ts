@@ -11,7 +11,7 @@ import {
   UpdateMovieResponse,
 } from "./types";
 
-export const userApi = baseApi
+export const movieApi = baseApi
   .enhanceEndpoints({
     addTagTypes: ["movies", "movie"],
   })
@@ -35,7 +35,7 @@ export const userApi = baseApi
 
       createMovie: builder.mutation<CreateMovieResponse, CreateMovieDto>({
         query: ({ body }) => ({
-          url: "movies",
+          url: "/movies",
           method: "POST",
           body,
         }),
@@ -44,7 +44,7 @@ export const userApi = baseApi
 
       updateMovie: builder.mutation<UpdateMovieResponse, UpdateMovieDto>({
         query: ({ id, body }) => ({
-          url: `movies/${id}`,
+          url: `/movies/${id}`,
           method: "PATCH",
           body,
         }),
@@ -53,7 +53,7 @@ export const userApi = baseApi
 
       deleteMovie: builder.mutation<DeleteMovieResponse, DeleteMovieDto>({
         query: ({ id }) => ({
-          url: `movies/${id}`,
+          url: `/movies/${id}`,
           method: "DELETE",
         }),
         invalidatesTags: ["movies", "movie"],
@@ -67,4 +67,4 @@ export const {
   useCreateMovieMutation,
   useUpdateMovieMutation,
   useDeleteMovieMutation,
-} = userApi;
+} = movieApi;
