@@ -1,5 +1,9 @@
-import type { UserEntity } from "@/entities/user";
-import { useUpdateUserMutation } from "@/entities/user/model/api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type { FC } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { useCreateUserMutation } from "@/entities/user";
 import {
   Button,
   Form,
@@ -11,10 +15,6 @@ import {
   Input,
 } from "@/shared/ui";
 import { notify } from "@/shared/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import type { FC } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 const schema = z.object({
   email: z.string().email(),
@@ -23,22 +23,18 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-type EditUserFormProps = {
-  user: UserEntity;
+type CreateUserFormProps = {
   onSuccess: () => void;
 };
 
-export const EditUserForm: FC<EditUserFormProps> = (props) => {
-  const {
-    user: { id: userId, email },
-    onSuccess,
-  } = props;
-  const [updateUser, { isLoading }] = useUpdateUserMutation();
+export const CreateUserForm: FC<CreateUserFormProps> = (props) => {
+  const { onSuccess } = props;
+  const [createUser, { isLoading }] = useCreateUserMutation();
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      email,
+      email: "",
       password: "",
     },
   });
@@ -46,8 +42,7 @@ export const EditUserForm: FC<EditUserFormProps> = (props) => {
   const onSubmit = async (data: FormData) => {
     const { email, password } = data;
 
-    const response = await updateUser({
-      userId,
+    const response = await createUser({
       body: {
         email,
         password,
@@ -59,7 +54,7 @@ export const EditUserForm: FC<EditUserFormProps> = (props) => {
       return;
     }
 
-    notify.success("Пользователь обновлен");
+    notify.success("Пользователь создан");
     onSuccess?.();
   };
 
@@ -109,7 +104,7 @@ export const EditUserForm: FC<EditUserFormProps> = (props) => {
             Cancel
           </Button>
           <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Saving..." : "Save"}
+            {isLoading ? "Creating..." : "Create"}
           </Button>
         </div>
       </form>

@@ -14,6 +14,7 @@ import {
   FormMessage,
   Input,
 } from "@/shared/ui";
+import { notify } from "@/shared/utils";
 
 const schema = z
   .object({
@@ -43,17 +44,19 @@ export const CreateMovieForm: FC<CreateMovieFormProps> = (props) => {
   const onSubmit = async (data: FormData) => {
     const { name } = data;
 
-    try {
-      await createMovie({
-        body: {
-          name,
-        },
-      }).unwrap();
-      form.reset();
-      onSuccess();
-    } catch (error) {
-      // Handle error
+    const response = await createMovie({
+      body: {
+        name,
+      },
+    }).unwrap();
+    onSuccess();
+
+    if ("error" in response) {
+      return;
     }
+
+    notify.success("Фильм создан");
+    onSuccess?.();
   };
 
   return (
