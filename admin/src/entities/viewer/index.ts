@@ -1,2 +1,2 @@
-export * from "./model/authApi";
 export * from "./model/types";
+export * from "./model/viewerApi";
