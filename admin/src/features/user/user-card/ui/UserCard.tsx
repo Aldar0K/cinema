@@ -1,6 +1,7 @@
 import { FC } from "react";
 
 import { UserEntity } from "@/entities/user";
+import { DeleteUserButton } from "@/features/user/delete-user";
 import { EditUserButton } from "@/features/user/edit-user";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui";
 import { cn } from "@/shared/utils";
@@ -17,14 +18,14 @@ const UserCard: FC<UserCardProps> = (props) => {
     user,
     user: { id: userId, email },
     editable = false,
-    // deleteable = false,
+    deleteable = false,
     className,
   } = props;
 
   return (
     <Card
       className={cn(className)}
-      role="button"
+      role="cell"
       aria-label={`View details for ${email} (${userId})`}
     >
       <CardHeader className="pb-2">
@@ -35,7 +36,7 @@ const UserCard: FC<UserCardProps> = (props) => {
       <CardContent className="space-y-1.5">
         <div className="flex justify-end gap-2">
           {editable && <EditUserButton user={user} />}
-          {/* {deleteable && <DeleteUserButton user={user} />} */}
+          {deleteable && <DeleteUserButton user={user} />}
         </div>
       </CardContent>
     </Card>
