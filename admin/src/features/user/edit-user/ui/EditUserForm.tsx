@@ -74,7 +74,7 @@ export const EditUserForm: FC<EditUserFormProps> = (props) => {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter your email"
+                  placeholder="Enter email"
                   type="email"
                   disabled={isLoading}
                   {...field}
@@ -93,7 +93,7 @@ export const EditUserForm: FC<EditUserFormProps> = (props) => {
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter your password"
+                  placeholder="Enter password"
                   type="password"
                   disabled={isLoading}
                   {...field}
