@@ -44,4 +44,4 @@ export type DeleteSeanceDto = {
   seanceId: number;
 };
 
-export type DeleteSeanceResponse = void;
+export type DeleteSeanceResponse = unknown;

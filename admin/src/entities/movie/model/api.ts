@@ -1,5 +1,6 @@
 import { baseApi } from "@/shared/api";
 
+import { handleError } from "@/shared/utils";
 import {
   CreateMovieDto,
   CreateMovieResponse,
@@ -22,6 +23,11 @@ export const movieApi = baseApi
           url: "/movies",
           method: "GET",
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         providesTags: ["movies"],
       }),
 
@@ -30,6 +36,11 @@ export const movieApi = baseApi
           url: `/movies/${id}`,
           method: "GET",
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         providesTags: ["movie"],
       }),
 
@@ -39,6 +50,11 @@ export const movieApi = baseApi
           method: "POST",
           body,
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         invalidatesTags: ["movies"],
       }),
 
@@ -48,6 +64,11 @@ export const movieApi = baseApi
           method: "PATCH",
           body,
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         invalidatesTags: ["movies", "movie"],
       }),
 
@@ -56,6 +77,11 @@ export const movieApi = baseApi
           url: `/movies/${id}`,
           method: "DELETE",
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         invalidatesTags: ["movies", "movie"],
       }),
     }),

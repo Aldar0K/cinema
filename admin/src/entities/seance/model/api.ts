@@ -1,5 +1,6 @@
 import { baseApi } from "@/shared/api";
 
+import { handleError } from "@/shared/utils";
 import {
   CreateSeanceDto,
   CreateSeanceResponse,
@@ -23,6 +24,11 @@ export const seanceApi = baseApi
           url: "seances",
           method: "GET",
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         providesTags: ["seances"],
       }),
 
@@ -31,6 +37,11 @@ export const seanceApi = baseApi
           url: `seances/${seanceId}`,
           method: "GET",
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         providesTags: ["seance"],
       }),
 
@@ -40,6 +51,11 @@ export const seanceApi = baseApi
           method: "POST",
           body,
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         invalidatesTags: ["movie", "seances"],
       }),
 
@@ -49,6 +65,11 @@ export const seanceApi = baseApi
           method: "PATCH",
           body,
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         invalidatesTags: ["movie", "seances", "seance"],
       }),
 
@@ -57,6 +78,11 @@ export const seanceApi = baseApi
           url: `seances/${seanceId}`,
           method: "DELETE",
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         invalidatesTags: ["movie", "seances"],
       }),
     }),

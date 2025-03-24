@@ -26,7 +26,7 @@ export const DeleteUserDialog: FC<DeleteUserDialogProps> = (props) => {
 
   const handleDelete = async () => {
     try {
-      await deleteUser({ userId }).unwrap();
+      await deleteUser({ userId });
       setOpen(false);
     } catch (error) {
       // Handle error

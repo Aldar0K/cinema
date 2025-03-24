@@ -10,6 +10,7 @@ import {
   FormMessage,
   Input,
 } from "@/shared/ui";
+import { notify } from "@/shared/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
@@ -41,15 +42,17 @@ export const EditMovieForm: FC<EditMovieFormProps> = (props) => {
   });
 
   const onSubmit = async (data: FormData) => {
-    try {
-      await updateMovie({
-        id: movie.id,
-        body: data,
-      }).unwrap();
-      onSuccess();
-    } catch (error) {
-      // Handle error
+    const response = await updateMovie({
+      id: movie.id,
+      body: data,
+    });
+
+    if ("error" in response) {
+      return;
     }
+
+    notify.success("Movie updated");
+    onSuccess?.();
   };
 
   return (

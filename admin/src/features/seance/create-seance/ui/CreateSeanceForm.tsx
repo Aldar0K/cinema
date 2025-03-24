@@ -53,8 +53,7 @@ export const CreateSeanceForm: FC<CreateSeanceFormProps> = (props) => {
         movieId: Number(data.movieId),
         time: data.time,
       },
-    }).unwrap();
-    onSuccess();
+    });
 
     if ("error" in response) {
       return;

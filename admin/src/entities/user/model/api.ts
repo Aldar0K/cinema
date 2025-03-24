@@ -1,5 +1,6 @@
 import { baseApi } from "@/shared/api";
 
+import { handleError } from "@/shared/utils";
 import {
   CreateUserDto,
   CreateUserResponse,
@@ -23,6 +24,11 @@ export const userApi = baseApi
           url: "/users",
           method: "GET",
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         providesTags: ["users"],
       }),
 
@@ -31,6 +37,11 @@ export const userApi = baseApi
           url: `users/${userId}`,
           method: "GET",
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         providesTags: ["user"],
       }),
 
@@ -40,6 +51,11 @@ export const userApi = baseApi
           method: "POST",
           body,
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         invalidatesTags: ["users"],
       }),
 
@@ -49,6 +65,11 @@ export const userApi = baseApi
           method: "PATCH",
           body,
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         invalidatesTags: ["users", "user"],
       }),
 
@@ -57,6 +78,11 @@ export const userApi = baseApi
           url: `users/${userId}`,
           method: "DELETE",
         }),
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled.catch((error) => {
+            handleError(error);
+          });
+        },
         invalidatesTags: ["users"],
       }),
     }),

@@ -52,8 +52,7 @@ export const EditUserForm: FC<EditUserFormProps> = (props) => {
         email,
         password,
       },
-    }).unwrap();
-    onSuccess();
+    });
 
     if ("error" in response) {
       return;

@@ -47,8 +47,7 @@ export const CreateUserForm: FC<CreateUserFormProps> = (props) => {
         email,
         password,
       },
-    }).unwrap();
-    onSuccess();
+    });
 
     if ("error" in response) {
       return;

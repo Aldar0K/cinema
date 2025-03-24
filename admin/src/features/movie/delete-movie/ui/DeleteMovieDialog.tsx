@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui";
+import { notify } from "@/shared/utils";
 
 type DeleteMovieDialogProps = {
   movie: Movie;
@@ -21,12 +22,13 @@ export const DeleteMovieDialog: FC<DeleteMovieDialogProps> = (props) => {
   const [deleteMovie, { isLoading }] = useDeleteMovieMutation();
 
   const handleDelete = async () => {
-    try {
-      await deleteMovie({ id: movie.id }).unwrap();
-      setOpen(false);
-    } catch (error) {
-      // Handle error
+    const response = await deleteMovie({ id: movie.id });
+
+    if ("error" in response) {
+      return;
     }
+
+    notify.success("Movie deleted");
   };
 
   return (

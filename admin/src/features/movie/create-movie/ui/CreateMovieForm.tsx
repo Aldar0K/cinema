@@ -48,8 +48,7 @@ export const CreateMovieForm: FC<CreateMovieFormProps> = (props) => {
       body: {
         name,
       },
-    }).unwrap();
-    onSuccess();
+    });
 
     if ("error" in response) {
       return;

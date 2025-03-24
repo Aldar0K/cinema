@@ -44,8 +44,7 @@ export const EditSeanceForm: FC<EditSeanceFormProps> = (props) => {
       body: {
         time: data.time,
       },
-    }).unwrap();
-    onSuccess();
+    });
 
     if ("error" in response) {
       return;

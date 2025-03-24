@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/ui";
+import { notify } from "@/shared/utils";
 
 type DeleteSeanceDialogProps = {
   seance: Seance;
@@ -25,12 +26,15 @@ export const DeleteSeanceDialog: FC<DeleteSeanceDialogProps> = (props) => {
   const [deleteSeance, { isLoading }] = useDeleteSeanceMutation();
 
   const handleDelete = async () => {
-    try {
-      await deleteSeance({ seanceId }).unwrap();
-      setOpen(false);
-    } catch (error) {
-      // Handle error
+    const response = await deleteSeance({
+      seanceId,
+    });
+
+    if ("error" in response) {
+      return;
     }
+
+    notify.success("Пользователь создан");
   };
 
   return (
