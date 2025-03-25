@@ -25,12 +25,13 @@ export const DeleteUserDialog: FC<DeleteUserDialogProps> = (props) => {
   const [deleteUser, { isLoading }] = useDeleteUserMutation();
 
   const handleDelete = async () => {
-    try {
-      await deleteUser({ userId });
-      setOpen(false);
-    } catch (error) {
-      // Handle error
+    const response = await deleteUser({ userId });
+
+    if ("error" in response) {
+      return;
     }
+
+    setOpen(false);
   };
 
   return (
