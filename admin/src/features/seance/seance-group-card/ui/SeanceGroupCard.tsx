@@ -115,7 +115,7 @@ const SeanceGroupCard: FC<SeanceGroupCardProps> = (props) => {
                   )}
                   movie={movie}
                   size="lg"
-                  className="min-h-[181.33px] h-full w-full"
+                  className="min-h-[141.33px] h-full w-full"
                 />
               </div>
             </div>
