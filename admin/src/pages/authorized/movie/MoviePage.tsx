@@ -43,8 +43,9 @@ const MoviePage: FC = () => {
         <div className="flex items-center gap-6">
           <Avatar className="h-20 w-20">
             <AvatarImage
-              // src={movie.posterUrl}
+              src={movie.posterUrl}
               alt={movie.name}
+              className="w-full h-auto object-cover"
             />
             <AvatarFallback>
               <Film className="h-10 w-10" />

@@ -15,10 +15,15 @@ import {
   Input,
 } from "@/shared/ui";
 import { notify } from "@/shared/utils";
+import { AnimatePresence, motion } from "framer-motion";
 
 const schema = z
   .object({
-    name: z.string().min(2, "Name must be at least 2 characters"),
+    name: z
+      .string()
+      .min(2, "Name must be at least 2 characters")
+      .max(100, "Name must be less than 100 characters"),
+    posterUrl: z.string().optional(),
   })
   .required({
     name: true,
@@ -36,17 +41,15 @@ export const CreateMovieForm: FC<CreateMovieFormProps> = (props) => {
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      name: "",
-    },
   });
 
   const onSubmit = async (data: FormData) => {
-    const { name } = data;
+    const { name, posterUrl } = data;
 
     const response = await createMovie({
       body: {
         name,
+        posterUrl,
       },
     });
 
@@ -74,6 +77,37 @@ export const CreateMovieForm: FC<CreateMovieFormProps> = (props) => {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="posterUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Poster URL</FormLabel>
+              <FormControl>
+                <Input placeholder="Poster URL" {...field} />
+              </FormControl>
+              {field.value && (
+                <AnimatePresence>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <img
+                      src={field.value}
+                      alt={field.value}
+                      className="max-h-[400px] w-full h-auto object-cover"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              )}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <div className="flex justify-end gap-4">
           <Button type="button" variant="outline" onClick={onSuccess}>
             Cancel

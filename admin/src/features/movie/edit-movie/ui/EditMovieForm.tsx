@@ -1,3 +1,9 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AnimatePresence, motion } from "framer-motion";
+import type { FC } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 import type { Movie } from "@/entities/movie";
 import { useUpdateMovieMutation } from "@/entities/movie/model/api";
 import {
@@ -11,17 +17,18 @@ import {
   Input,
 } from "@/shared/ui";
 import { notify } from "@/shared/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import type { FC } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
-const schema = z.object({
-  name: z
-    .string()
-    .min(2, "Name must be at least 2 characters")
-    .max(100, "Name must be less than 100 characters"),
-});
+const schema = z
+  .object({
+    name: z
+      .string()
+      .min(2, "Name must be at least 2 characters")
+      .max(100, "Name must be less than 100 characters"),
+    posterUrl: z.string().optional(),
+  })
+  .required({
+    name: true,
+  });
 
 type FormData = z.infer<typeof schema>;
 
@@ -38,13 +45,19 @@ export const EditMovieForm: FC<EditMovieFormProps> = (props) => {
     resolver: zodResolver(schema),
     defaultValues: {
       name: movie.name,
+      posterUrl: movie.posterUrl,
     },
   });
 
   const onSubmit = async (data: FormData) => {
+    const { name, posterUrl } = data;
+
     const response = await updateMovie({
       id: movie.id,
-      body: data,
+      body: {
+        name,
+        posterUrl,
+      },
     });
 
     if ("error" in response) {
@@ -67,6 +80,36 @@ export const EditMovieForm: FC<EditMovieFormProps> = (props) => {
               <FormControl>
                 <Input placeholder="Movie name" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="posterUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Poster URL</FormLabel>
+              <FormControl>
+                <Input placeholder="Poster URL" {...field} />
+              </FormControl>
+              {field.value && (
+                <AnimatePresence>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <img
+                      src={field.value}
+                      alt={field.value}
+                      className="max-h-[600px] w-full h-auto object-contain"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              )}
               <FormMessage />
             </FormItem>
           )}
