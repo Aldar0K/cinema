@@ -29,9 +29,10 @@ model Article {
 }
 
 model Movie {
-  id      Int      @id @default(autoincrement())
-  name    String   @unique
-  seances Seance[]
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  posterUrl String?
+  seances   Seance[]
 }
 
 model Seance {

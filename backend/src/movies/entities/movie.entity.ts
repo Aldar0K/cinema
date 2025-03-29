@@ -9,6 +9,9 @@ export class MovieEntity implements Movie {
   @ApiProperty()
   name: string;
 
+  @ApiProperty({ required: false, nullable: true })
+  posterUrl: string | null;
+
   @ApiProperty()
   seances: SeanceEntity[];
 }
