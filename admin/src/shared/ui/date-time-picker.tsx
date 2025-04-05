@@ -65,7 +65,10 @@ export const DateTimePicker: FC<DateTimePickerProps> = (props) => {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
+      <PopoverContent
+        onWheel={(e) => e.stopPropagation()}
+        className="w-auto p-0"
+      >
         <div className="sm:flex">
           <Calendar
             mode="single"
