@@ -63,6 +63,22 @@ services:
     networks:
       - cinema
 
+  client:
+    container_name: client
+    platform: linux/amd64
+    build:
+      context: ../client
+      dockerfile: ../cinema-dev-config/Dockerfile.client
+    ports:
+      - "3002:3000"
+    volumes:
+      - ../client:/usr/app
+    environment:
+      NEXT_PUBLIC_NODE_ENV: ${NEXT_PUBLIC_IS_DEV}
+      NEXT_PUBLIC_BACKEND_URL: ${NEXT_PUBLIC_BACKEND_URL}
+    networks:
+      - cinema
+
 networks:
   cinema:
 volumes:
