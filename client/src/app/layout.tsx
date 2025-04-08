@@ -1,4 +1,4 @@
-import "@/shared/styles/main.css";
+import "@/styles/main.scss";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 

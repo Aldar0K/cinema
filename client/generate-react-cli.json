@@ -1,0 +1,61 @@
+{
+  "usesTypeScript": true,
+  "usesTailwind": true,
+  "usesStyledComponents": false,
+  "usesCssModule": true,
+  "component": {
+    "default": {
+      "path": "src",
+      "withIndex": true,
+      "withStyle": false,
+      "withTest": false,
+      "withStory": false,
+      "withLazy": false,
+      "customTemplates": {
+        "index": "templates/component/index.ts",
+        "component": "templates/component/TemplateName.tsx"
+      }
+    },
+    "lazy": {
+      "path": "src",
+      "withIndex": true,
+      "withStyle": false,
+      "withTest": false,
+      "withStory": false,
+      "withLazy": true,
+      "customTemplates": {
+        "index": "templates/component-lazy/index.ts",
+        "lazy": "templates/component-lazy/TemplateName.lazy.tsx",
+        "component": "templates/component-lazy/TemplateName.tsx"
+      }
+    },
+    "section": {
+      "path": "src",
+      "withIndex": true,
+      "withStyle": false,
+      "withTest": false,
+      "withStory": false,
+      "withLazy": false,
+      "customTemplates": {
+        "index": "templates/section/index.ts",
+        "component": "templates/section/TemplateName.tsx"
+      }
+    },
+    "page": {
+      "path": "src",
+      "withIndex": true,
+      "withStyle": true,
+      "withTest": false,
+      "withStory": false,
+      "withLazy": true,
+      "customTemplates": {
+        "index": "templates/page/index.ts",
+        "lazy": "templates/page/TemplateName.lazy.tsx",
+        "style": "templates/page/TemplateName.module.scss",
+        "component": "templates/page/TemplateName.tsx"
+      }
+    }
+  },
+  "cssPreprocessor": "usesTailwind",
+  "testLibrary": "None"
+}

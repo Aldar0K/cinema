@@ -74,7 +74,7 @@ services:
     volumes:
       - ../client:/usr/app
     environment:
-      NEXT_PUBLIC_NODE_ENV: ${NEXT_PUBLIC_IS_DEV}
+      NEXT_PUBLIC_IS_DEV: ${NEXT_PUBLIC_IS_DEV}
       NEXT_PUBLIC_BACKEND_URL: ${NEXT_PUBLIC_BACKEND_URL}
     networks:
       - cinema
