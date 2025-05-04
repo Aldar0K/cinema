@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { useAuth } from "@/features/auth";
 import {
   ButtonMobile,
   Navigation,
@@ -11,6 +12,7 @@ import { ThemeToggle } from "@/features/theme-toggle";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { status, session } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -22,6 +24,9 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
+          {status === "authenticated" && session?.user && (
+            <p>{session.user.email}</p>
+          )}
         </div>
       </div>
 

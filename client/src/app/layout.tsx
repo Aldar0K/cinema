@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 
 import "@/shared/styles/main.scss";
 
-import { ThemeProvider } from "@/providers/ThemeProvider";
 import { Header } from "@/widgets/header";
+import { Providers } from "./providers";
 // import { Footer } from "@/components/footer";
 // import { Toaster } from "@/components/ui/toaster";
 
@@ -23,20 +23,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          storageKey="theme"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">{children}</main>
             {/* <Footer /> */}
           </div>
-          {/* <Toaster /> */}
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );
