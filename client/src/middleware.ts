@@ -1,23 +1,15 @@
-import { jwtVerify } from "jose";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 // Paths that require authentication
-const protectedPaths = [
-  "/profile",
-  "/profile/tickets",
-  "/profile/settings",
-  "/movies/*/book",
-];
+const protectedPaths = ["/", "/profile"];
 
 // Paths that are only accessible to non-authenticated users
 const authPaths = ["/auth/login", "/auth/register"];
 
-// Secret key for verifying JWT tokens
-const JWT_SECRET = process.env.JWT_SECRET || "";
-
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
+  console.log("Request path:", path);
 
   // Check if the path is protected or auth-only
   const isProtectedPath = protectedPaths.some((protectedPath) => {
@@ -27,25 +19,20 @@ export async function middleware(request: NextRequest) {
     }
     return path === protectedPath || path.startsWith(`${protectedPath}/`);
   });
+  console.log("Is protected path:", isProtectedPath);
 
   const isAuthPath = authPaths.some(
     (authPath) => path === authPath || path.startsWith(`${authPath}/`),
   );
+  console.log("Is auth path:", isAuthPath);
 
   // Get the token from cookies
-  const token = request.cookies.get("auth-token")?.value;
+  const token = request.cookies.get("access_token")?.value;
+  console.log("Token:", token);
 
-  // Verify the token
-  let isAuthenticated = false;
-  if (token) {
-    try {
-      await jwtVerify(token, new TextEncoder().encode(JWT_SECRET));
-      isAuthenticated = true;
-    } catch (error) {
-      // Token is invalid or expired
-      isAuthenticated = false;
-    }
-  }
+  // Determine if the user is authenticated based on the presence of the token
+  const isAuthenticated = Boolean(token);
+  console.log("Is authenticated:", isAuthenticated);
 
   // Redirect logic
   if (isProtectedPath && !isAuthenticated) {
@@ -55,11 +42,13 @@ export async function middleware(request: NextRequest) {
       "callbackUrl",
       encodeURI(request.nextUrl.pathname),
     );
+    console.log("Redirecting to login");
     return NextResponse.redirect(redirectUrl);
   }
 
   if (isAuthPath && isAuthenticated) {
     // Redirect to home if trying to access auth paths while authenticated
+    console.log("Redirecting to home");
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -69,8 +58,8 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Match all protected paths
-    "/profile/:path*",
-    "/movies/:id/book/:path*",
+    "/",
+    "/profile",
     // Match all auth paths
     "/auth/:path*",
   ],
