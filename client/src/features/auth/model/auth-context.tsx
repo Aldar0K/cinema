@@ -24,47 +24,52 @@ interface AuthContextType extends AuthState {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+
   const [state, setState] = useState<AuthState>({
     status: "loading",
     session: null,
   });
 
-  const router = useRouter();
-
   // Fetch session on initial load
   useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const res = await fetch(`/api/auth/me`, {
-          method: "GET",
-          credentials: "include",
-        });
-        const user = await res.json();
+    fetchSession();
+  }, []);
 
-        if (user) {
-          setState({
-            status: "authenticated",
-            session: {
-              user,
-            },
-          });
-        } else {
-          setState({
-            status: "unauthenticated",
-            session: null,
-          });
-        }
-      } catch (error) {
-        console.error("Failed to fetch session:", error);
+  const fetchSession = async () => {
+    try {
+      const res = await fetch(`/api/auth/session`, {
+        method: "GET",
+        // credentials: "include",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch session");
+      }
+
+      const user = await res.json();
+
+      if (user) {
+        setState({
+          status: "authenticated",
+          session: {
+            user,
+          },
+        });
+      } else {
         setState({
           status: "unauthenticated",
           session: null,
         });
       }
-    };
-
-    fetchSession();
-  }, []);
+    } catch (error) {
+      console.error("Failed to fetch session:", error);
+      setState({
+        status: "unauthenticated",
+        session: null,
+      });
+    }
+  };
 
   const login = async (data: LoginFormValues): Promise<User | null> => {
     try {
@@ -86,9 +91,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const responseData = await res.json();
 
       // Store the token in an HTTP-only cookie using server action
-      if (responseData.token) {
-        await setAuthCookie(responseData.token);
-      }
+      // if (responseData.token) {
+      //   await setAuthCookie(responseData.token);
+      // }
 
       // Update state with user data
       const user = responseData; // Adjust based on your API response
@@ -129,9 +134,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const responseData = await res.json();
 
       // Store the token in an HTTP-only cookie using server action
-      if (responseData.token) {
-        await setAuthCookie(responseData.token);
-      }
+      // if (responseData.token) {
+      //   await setAuthCookie(responseData.token);
+      // }
 
       // Update state with user data
       const user = responseData.user || responseData; // Adjust based on your API response
@@ -154,17 +159,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async (): Promise<void> => {
     try {
-      // Make direct API request to your backend if needed
-      await fetch(`${API_URL}/auth/logout`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).catch((err) =>
-        console.error("Error notifying backend about logout:", err),
-      );
-
       // Clear the auth cookie using server action
       await clearAuthCookie();
 

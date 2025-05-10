@@ -9,10 +9,11 @@ import {
   NavigationMobile,
 } from "@/features/navigation";
 import { ThemeToggle } from "@/features/theme-toggle";
+import { Button } from "@/shared/ui";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { status, session } = useAuth();
+  const { status, session, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -25,7 +26,15 @@ export function Header() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
           {status === "authenticated" && session?.user && (
-            <p>{session.user.email}</p>
+            <>
+              <p>{session.user.email}</p>
+              <Button
+                onClick={logout}
+                className="ml-2 px-4 py-2 bg-red-500 text-white rounded"
+              >
+                Logout
+              </Button>
+            </>
           )}
         </div>
       </div>

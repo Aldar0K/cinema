@@ -2,8 +2,16 @@
 
 import { registerSchema } from "@/entities/session";
 import { useAuth } from "@/features/auth";
-import { useToast } from "@/shared/hooks";
 import {
+  Alert,
+  AlertDescription,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
   Checkbox,
   Form,
   FormControl,
@@ -11,21 +19,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  Input,
 } from "@/shared/ui";
-import { Button } from "@/shared/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/shared/ui/card";
-import { Input } from "@/shared/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FormEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -39,9 +38,10 @@ const extendedSchema = registerSchema.and(
 
 export function RegisterForm() {
   const router = useRouter();
-  const { toast } = useToast();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams?.get("callbackUrl") || "/";
   const { register, status } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<
     z.infer<typeof registerSchema> & { acceptTerms: boolean }
@@ -56,38 +56,28 @@ export function RegisterForm() {
     },
   });
 
-  async function onSubmit(
-    values: z.infer<typeof registerSchema> & { acceptTerms: boolean },
-  ) {
-    setIsLoading(true);
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
 
     try {
-      const { acceptTerms, ...registerData } = values;
-      const user = await register(registerData);
+      const user = await register({ name, email, password, confirmPassword });
 
       if (user) {
-        toast({
-          title: "Success",
-          description: "Your account has been created.",
-        });
-        router.push("/");
+        router.push(callbackUrl);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: "Failed to create account. Please try again.",
-        });
+        setError("Failed to create account");
       }
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-      });
-    } finally {
-      setIsLoading(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
     }
-  }
+  };
 
   return (
     <Card className="w-full max-w-md">
@@ -98,8 +88,13 @@ export function RegisterForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {error && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <FormField
               control={form.control}
               name="name"
@@ -181,9 +176,9 @@ export function RegisterForm() {
             <Button
               type="submit"
               className="w-full"
-              disabled={isLoading || status === "loading"}
+              disabled={status === "loading"}
             >
-              {isLoading ? "Creating account..." : "Create account"}
+              {status === "loading" ? "Creating account..." : "Create account"}
             </Button>
           </form>
         </Form>

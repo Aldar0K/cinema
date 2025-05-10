@@ -28,7 +28,6 @@ export async function middleware(request: NextRequest) {
 
   // Get the token from cookies
   const token = request.cookies.get("access_token")?.value;
-  console.log("Token:", token);
 
   // Determine if the user is authenticated based on the presence of the token
   const isAuthenticated = Boolean(token);
@@ -42,13 +41,11 @@ export async function middleware(request: NextRequest) {
       "callbackUrl",
       encodeURI(request.nextUrl.pathname),
     );
-    console.log("Redirecting to login");
     return NextResponse.redirect(redirectUrl);
   }
 
   if (isAuthPath && isAuthenticated) {
     // Redirect to home if trying to access auth paths while authenticated
-    console.log("Redirecting to home");
     return NextResponse.redirect(new URL("/", request.url));
   }
 

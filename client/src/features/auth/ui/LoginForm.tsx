@@ -23,7 +23,7 @@ export function LoginForm() {
   const { status, login } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const callbackUrl = searchParams?.get("callbackUrl") || "/";
 
   const [error, setError] = useState<string | null>(null);
 

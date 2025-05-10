@@ -2,6 +2,8 @@ import { CookieNames } from "@/shared/constants";
 import { decodeJwt } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
+// TODO do it on the client side?
+
 export async function GET(request: NextRequest) {
   const token = request.cookies.get(CookieNames.ACCESS_TOKEN)?.value;
 
