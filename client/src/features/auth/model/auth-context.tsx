@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import type React from "react";
 import { createContext, useContext, useEffect, useState } from "react";
 
-import { clearAuthCookie, setAuthCookie } from "@/app/actions/auth-actions";
 import type {
   AuthState,
   LoginFormValues,
   RegisterFormValues,
-  User,
 } from "@/entities/session";
+import { User } from "@/entities/user";
+import { SignInResponse, SignUpResponse } from "./types";
 
 // Your backend API URL
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -38,16 +38,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const fetchSession = async () => {
     try {
-      const res = await fetch(`/api/auth/session`, {
-        method: "GET",
-        // credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/profile`,
+        {
+          method: "GET",
+          credentials: "include",
+        },
+      );
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch session");
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to login");
       }
 
-      const user = await res.json();
+      const user = (await response.json()) as User;
 
       if (user) {
         setState({
@@ -75,28 +79,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       setState((prev) => ({ ...prev, status: "loading" }));
 
-      // Make direct API request to your backend
-      const res = await fetch(`${API_URL}/auth/sign-in`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        credentials: "include", // Important for cookies if your API is on the same domain
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/sign-in`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+          credentials: "include",
+        },
+      );
 
-      if (!res.ok) {
-        const error = await res.json();
+      if (!response.ok) {
+        const error = await response.json();
         throw new Error(error.message || "Failed to login");
       }
 
-      const responseData = await res.json();
-
-      // Store the token in an HTTP-only cookie using server action
-      // if (responseData.token) {
-      //   await setAuthCookie(responseData.token);
-      // }
-
-      // Update state with user data
-      const user = responseData; // Adjust based on your API response
+      const { user } = (await response.json()) as SignInResponse;
 
       setState({
         status: "authenticated",
@@ -105,7 +103,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         },
       });
 
-      router.refresh();
       return user;
     } catch (error) {
       console.error("Login error:", error);
@@ -118,28 +115,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       setState((prev) => ({ ...prev, status: "loading" }));
 
-      // Make direct API request to your backend
-      const res = await fetch(`${API_URL}/auth/sign-up`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        credentials: "include", // Important for cookies if your API is on the same domain
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/sign-up`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+          credentials: "include",
+        },
+      );
 
-      if (!res.ok) {
-        const error = await res.json();
+      if (!response.ok) {
+        const error = await response.json();
         throw new Error(error.message || "Failed to register");
       }
 
-      const responseData = await res.json();
-
-      // Store the token in an HTTP-only cookie using server action
-      // if (responseData.token) {
-      //   await setAuthCookie(responseData.token);
-      // }
-
-      // Update state with user data
-      const user = responseData.user || responseData; // Adjust based on your API response
+      const { user } = (await response.json()) as SignUpResponse;
 
       setState({
         status: "authenticated",
@@ -148,7 +139,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         },
       });
 
-      router.refresh();
       return user;
     } catch (error) {
       console.error("Registration error:", error);
@@ -159,12 +149,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async (): Promise<void> => {
     try {
-      // Clear the auth cookie using server action
-      await clearAuthCookie();
+      const response = await fetch(`/api/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to logout");
+      }
 
       setState({ status: "unauthenticated", session: null });
+
       router.refresh();
-      router.push("/");
     } catch (error) {
       console.error("Logout error:", error);
     }

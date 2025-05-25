@@ -25,7 +25,7 @@ import { StateSchema } from "./types";
 const authPersistConfig = {
   storage,
   key: "auth",
-  whitelist: ["email"],
+  whitelist: ["user"],
 };
 
 const createReduxStore = (

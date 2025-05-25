@@ -15,6 +15,25 @@ export const authApi = baseApi
   })
   .injectEndpoints({
     endpoints: (builder) => ({
+      login: builder.mutation<LoginResponse, LoginDto>({
+        query: (dto) => ({
+          url: "/auth/sign-in",
+          method: "POST",
+          body: dto,
+        }),
+        invalidatesTags: ["viewer"],
+        onQueryStarted: (_, api) => {
+          api.queryFulfilled
+            .then((response) => {
+              api.dispatch(authActions.setUser(response.data.user));
+            })
+            .catch((error) => {
+              handleError(error);
+            });
+        },
+      }),
+
+      // the code below is not used
       registration: builder.mutation<RegistrationResponse, RegistrationDto>({
         query: (dto) => ({
           url: "/auth/sign-up",
@@ -28,24 +47,7 @@ export const authApi = baseApi
           });
         },
       }),
-      login: builder.mutation<LoginResponse, LoginDto>({
-        query: (dto) => ({
-          url: "/auth/sign-in",
-          method: "POST",
-          body: dto,
-        }),
-        invalidatesTags: ["viewer"],
-        onQueryStarted: (_, api) => {
-          api.queryFulfilled
-            .then((response) => {
-              api.dispatch(authActions.setUser({ email: response.data.email }));
-            })
-            .catch((error) => {
-              handleError(error);
-            });
-        },
-      }),
     }),
   });
 
-export const { useRegistrationMutation, useLoginMutation } = authApi;
+export const { useLoginMutation, useRegistrationMutation } = authApi;

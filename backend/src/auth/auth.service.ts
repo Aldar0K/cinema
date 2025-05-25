@@ -1,5 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
 import { compare, hash } from 'bcrypt';
 
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -17,7 +18,7 @@ export class AuthService {
   async signUp({
     email,
     password,
-  }: SignUpDto): Promise<{ access_token: string; email: string }> {
+  }: SignUpDto): Promise<{ access_token: string; user: User }> {
     const user = await this.prisma.user.findFirst({
       where: {
         email,
@@ -39,18 +40,18 @@ export class AuthService {
 
     const payload = { sub: createdUser.id, email: createdUser.email };
 
-    const token = await this.jwtService.signAsync(payload);
+    const access_token = await this.jwtService.signAsync(payload);
 
     return {
-      access_token: token,
-      email: createdUser.email,
+      user: createdUser,
+      access_token,
     };
   }
 
   async signIn({
     email,
     password,
-  }: SignInDto): Promise<{ access_token: string; email: string }> {
+  }: SignInDto): Promise<{ access_token: string; user: User }> {
     const user = await this.prisma.user.findFirst({
       where: {
         email,
@@ -73,11 +74,11 @@ export class AuthService {
 
     const payload = { sub: user.id, email: user.email };
 
-    const token = await this.jwtService.signAsync(payload);
+    const access_token = await this.jwtService.signAsync(payload);
 
     return {
-      access_token: token,
-      email: user.email,
+      user,
+      access_token,
     };
   }
 

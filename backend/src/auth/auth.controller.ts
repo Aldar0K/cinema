@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post, Request, Res } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+
 import { AuthService } from './auth.service';
 import { Public } from './decorators';
 import { SignInDto } from './dto/sign-in.dto';
@@ -18,14 +19,16 @@ export class AuthController {
     @Body() signUpDto: SignUpDto,
     @Res({ passthrough: true }) response,
   ) {
-    const { access_token } = await this.authService.signUp(signUpDto);
+    const { access_token, user } = await this.authService.signUp(signUpDto);
 
     response.cookie('access_token', access_token, {
       httpOnly: true,
       secure: true,
     });
 
-    return { success: true, email: signUpDto.email };
+    const { password, ...userWithoutPassword } = user; // eslint-disable-line @typescript-eslint/no-unused-vars
+
+    return { user: userWithoutPassword, success: true };
   }
 
   @Post('sign-in')
@@ -35,14 +38,16 @@ export class AuthController {
     @Body() signInDto: SignInDto,
     @Res({ passthrough: true }) response,
   ) {
-    const { access_token } = await this.authService.signIn(signInDto);
+    const { access_token, user } = await this.authService.signIn(signInDto);
 
     response.cookie('access_token', access_token, {
       httpOnly: true,
       secure: true,
     });
 
-    return { success: true, email: signInDto.email };
+    const { password, ...userWithoutPassword } = user; // eslint-disable-line @typescript-eslint/no-unused-vars
+
+    return { user: userWithoutPassword, success: true };
   }
 
   @Get('profile')

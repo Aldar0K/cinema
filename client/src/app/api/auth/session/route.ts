@@ -2,8 +2,6 @@ import { CookieNames } from "@/shared/constants";
 import { decodeJwt } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
-// TODO do it on the client side?
-
 export async function GET(request: NextRequest) {
   const token = request.cookies.get(CookieNames.ACCESS_TOKEN)?.value;
 
@@ -18,8 +16,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    // console.log("error", error);
-
     if (error instanceof Error) {
       return NextResponse.json({ message: error.message }, { status: 500 });
     } else {

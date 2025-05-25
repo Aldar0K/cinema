@@ -6,4 +6,4 @@ export const getAuthSlice = createSelector(
   (state) => state.auth,
 );
 
-export const getIsAuth = createSelector(getAuthSlice, (state) => !!state.email);
+export const getIsAuth = createSelector(getAuthSlice, (state) => !!state.user);

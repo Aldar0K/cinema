@@ -1,7 +1,4 @@
-export type User = {
-  id: string;
-  email: string;
-};
+import { User } from "@/entities/user";
 
 export type Session = {
   user: User;

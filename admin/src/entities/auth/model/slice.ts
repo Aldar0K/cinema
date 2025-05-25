@@ -1,23 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { UserEntity } from "@/entities/user";
 import { AuthSchema } from "./types";
 
 const initialState: AuthSchema = {
-  email: undefined,
+  user: undefined,
 };
 
 const authSlice = createSlice({
   initialState,
   name: "auth",
   reducers: {
-    setUser: (state, { payload }: PayloadAction<{ email: string }>) => {
-      state.email = payload.email;
+    setUser: (state, action: PayloadAction<UserEntity>) => {
+      state.user = action.payload;
     },
     signOut: () => initialState,
   },
 });
 
-export const actions = {
-  ...authSlice.actions,
-};
-export const { reducer } = authSlice;
+export const { actions: authActions } = authSlice;
+export const { reducer: authReducer } = authSlice;

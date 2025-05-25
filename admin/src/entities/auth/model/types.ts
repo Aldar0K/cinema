@@ -1,5 +1,7 @@
+import { UserEntity } from "@/entities/user";
+
 export interface AuthSchema {
-  email?: string;
+  user: UserEntity;
 }
 
 export type LoginDto = {
@@ -8,10 +10,11 @@ export type LoginDto = {
 };
 
 export type LoginResponse = {
-  email: string;
+  user: UserEntity;
   success: boolean;
 };
 
+// the code below is not used
 export type RefreshTokenDto = {
   refreshToken: string;
 };
@@ -28,8 +31,8 @@ export type RegistrationDto = {
 };
 
 export type RegistrationResponse = {
-  accessToken: string;
-  refreshToken: string;
+  user: UserEntity;
+  success: boolean;
 };
 
 export type GoogleLoginDto = {
