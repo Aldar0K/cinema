@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import type React from "react";
 import { useEffect } from "react";
 
-import { useAuth } from "@/features/auth";
+import { useAuth } from "../model/auth-context";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { status } = useAuth();
@@ -13,7 +13,9 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push(`/auth/login?callbackUrl=${encodeURIComponent(pathname)}`);
+      router.push(
+        `/auth/login?callbackUrl=${encodeURIComponent(pathname ?? "")}`,
+      );
     }
   }, [status, router, pathname]);
 

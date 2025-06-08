@@ -1,5 +1,12 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FormEvent, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 import { registerSchema } from "@/entities/session";
 import { useAuth } from "@/features/auth";
 import {
@@ -21,12 +28,6 @@ import {
   FormMessage,
   Input,
 } from "@/shared/ui";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 const extendedSchema = registerSchema.and(
   z.object({
